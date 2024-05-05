@@ -24,22 +24,24 @@ class Competences
     #[ORM\Column]
     private ?float $prix_estime = null;
 
-    /**
-     * @var Collection<int, Competenceemploye>
-     */
-    #[ORM\OneToMany(targetEntity: Competenceemploye::class, mappedBy: 'id_competence')]
-    private Collection $competenceemployes;
+
 
     /**
      * @var Collection<int, Prestations>
      */
-    #[ORM\OneToMany(targetEntity: Prestations::class, mappedBy: 'id_competence')]
+    #[ORM\OneToMany(targetEntity: Prestations::class, mappedBy: 'competence')]
     private Collection $prestations;
+
+    /**
+     * @var Collection<int, employes>
+     */
+    #[ORM\ManyToMany(targetEntity: employes::class, inversedBy: 'competences')]
+    private Collection $employe;
 
     public function __construct()
     {
-        $this->competenceemployes = new ArrayCollection();
         $this->prestations = new ArrayCollection();
+        $this->employe = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -83,35 +85,7 @@ class Competences
         return $this;
     }
 
-    /**
-     * @return Collection<int, Competenceemploye>
-     */
-    public function getCompetenceemployes(): Collection
-    {
-        return $this->competenceemployes;
-    }
 
-    public function addCompetenceemploye(Competenceemploye $competenceemploye): static
-    {
-        if (!$this->competenceemployes->contains($competenceemploye)) {
-            $this->competenceemployes->add($competenceemploye);
-            $competenceemploye->setIdCompetence($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCompetenceemploye(Competenceemploye $competenceemploye): static
-    {
-        if ($this->competenceemployes->removeElement($competenceemploye)) {
-            // set the owning side to null (unless already changed)
-            if ($competenceemploye->getIdCompetence() === $this) {
-                $competenceemploye->setIdCompetence(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Prestations>
@@ -139,6 +113,30 @@ class Competences
                 $prestation->setIdCompetence(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, employes>
+     */
+    public function getEmploye(): Collection
+    {
+        return $this->employe;
+    }
+
+    public function addEmploye(employes $employe): static
+    {
+        if (!$this->employe->contains($employe)) {
+            $this->employe->add($employe);
+        }
+
+        return $this;
+    }
+
+    public function removeEmploye(employes $employe): static
+    {
+        $this->employe->removeElement($employe);
 
         return $this;
     }

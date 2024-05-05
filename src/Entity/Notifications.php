@@ -14,21 +14,21 @@ class Notifications
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'notifications')]
-    private ?contrats $id_contrat = null;
+    private ?contrats $contrat = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdContrat(): ?contrats
+    public function getContrat(): ?contrats
     {
-        return $this->id_contrat;
+        return $this->contrat;
     }
 
-    public function setIdContrat(?contrats $id_contrat): static
+    public function setContrat(?contrats $contrat): static
     {
-        $this->id_contrat = $id_contrat;
+        $this->contrat = $contrat;
 
         return $this;
     }

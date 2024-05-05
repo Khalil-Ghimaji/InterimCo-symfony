@@ -1,0 +1,6 @@
+{%for emp in prestation.employe %}
+<h3>{{ emp.nom }}</h3>
+    {%for c in emp.competences %}
+        <h3>{{ c.competence }}</h3>
+    {% endfor %}
+{% endfor %}

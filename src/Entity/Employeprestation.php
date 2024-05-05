@@ -14,36 +14,36 @@ class Employeprestation
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'employeprestations')]
-    private ?Employes $id_employe = null;
+    private ?Employes $employe = null;
 
     #[ORM\ManyToOne(inversedBy: 'employeprestations')]
-    private ?Prestations $id_prestation = null;
+    private ?Prestations $prestation = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdEmploye(): ?employes
+    public function getEmploye(): ?employes
     {
-        return $this->id_employe;
+        return $this->employe;
     }
 
-    public function setIdEmploye(?employes $id_employe): static
+    public function setEmploye(?employes $employe): static
     {
-        $this->id_employe = $id_employe;
+        $this->employe = $employe;
 
         return $this;
     }
 
-    public function getIdPrestation(): ?prestations
+    public function getPrestation(): ?prestations
     {
-        return $this->id_prestation;
+        return $this->prestation;
     }
 
-    public function setIdPrestation(?prestations $id_prestation): static
+    public function setPrestation(?prestations $prestation): static
     {
-        $this->id_prestation = $id_prestation;
+        $this->prestation = $prestation;
 
         return $this;
     }

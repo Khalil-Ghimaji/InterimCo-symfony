@@ -15,9 +15,10 @@
             <p><strong>Durée (jours) :</strong> {{ prestation.duree }}</p>
             <p><strong>Prix (dinars) :</strong> {{ prestation.prix }}</p>
             <p><strong>Description :</strong> {{ prestation.description }}</p>
-            <p><strong>Compétence requise :</strong> {{ prestation.getCompetence(competencesRepository).getCompetence() }} ({{ prestation.getCompetence(competencesRepository).getNiveauCompetence() }})</p>
+            <p><strong>Compétence requise :</strong> {{ prestation.competence.competence }} ({{ prestation.competence.niveauCompetence }})</p>
         </div>
     </div>
+
 {% endblock %}
 {% block javascripts %}
 

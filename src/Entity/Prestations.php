@@ -42,21 +42,25 @@ class Prestations
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'prestations')]
-    private ?Contrats $id_contrat = null;
+    private ?Contrats $contrat = null;
 
-    /**
-     * @var Collection<int, Employeprestation>
-     */
-    #[ORM\OneToMany(targetEntity: Employeprestation::class, mappedBy: 'id_prestation')]
-    private Collection $employeprestations;
+
+
 
     #[ORM\ManyToOne(inversedBy: 'prestations')]
-    private ?Competences $id_competence = null;
-    private ?Competences $competence;
+    private ?Competences $competence = null;
+
+    /**
+     * @var Collection<int, employes>
+     */
+    #[ORM\ManyToMany(targetEntity: Employes::class, inversedBy: 'prestations')]
+    private Collection $employe;
+
+
 
     public function __construct()
     {
-        $this->employeprestations = new ArrayCollection();
+        $this->employe = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -160,64 +164,56 @@ class Prestations
         return $this;
     }
 
-    public function getIdContrat(): ?contrats
+    public function getContrat(): ?contrats
     {
-        return $this->id_contrat;
+        return $this->contrat;
     }
 
-    public function setIdContrat(?contrats $id_contrat): static
+    public function setContrat(?contrats $contrat): static
     {
-        $this->id_contrat = $id_contrat;
+        $this->contrat = $contrat;
+
+        return $this;
+    }
+
+
+
+    public function getCompetence(): ?competences
+    {
+        return $this->competence;
+    }
+
+    public function setCompetence(?competences $competence): static
+    {
+        $this->competence = $competence;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Employeprestation>
+     * @return Collection<int, employes>
      */
-    public function getEmployeprestations(): Collection
+    public function getEmploye(): Collection
     {
-        return $this->employeprestations;
+        return $this->employe;
     }
 
-    public function addEmployeprestation(Employeprestation $employeprestation): static
+    public function addEmploye(employes $employe): static
     {
-        if (!$this->employeprestations->contains($employeprestation)) {
-            $this->employeprestations->add($employeprestation);
-            $employeprestation->setIdPrestation($this);
+        if (!$this->employe->contains($employe)) {
+            $this->employe->add($employe);
         }
 
         return $this;
     }
 
-    public function removeEmployeprestation(Employeprestation $employeprestation): static
+    public function removeEmploye(employes $employe): static
     {
-        if ($this->employeprestations->removeElement($employeprestation)) {
-            // set the owning side to null (unless already changed)
-            if ($employeprestation->getIdPrestation() === $this) {
-                $employeprestation->setIdPrestation(null);
-            }
-        }
+        $this->employe->removeElement($employe);
 
         return $this;
     }
 
-    public function getIdCompetence(): ?competences
-    {
-        return $this->id_competence;
-    }
-
-    public function setIdCompetence(?competences $id_competence): static
-    {
-        $this->id_competence = $id_competence;
-
-        return $this;
-    }
-    public function getCompetence(CompetencesRepository $competencesRepository): ?Competences
-    {
-        // Récupérer la compétence à partir de son ID
-        return $competencesRepository->findById($this->id_competence);
-    }
 
 
 }

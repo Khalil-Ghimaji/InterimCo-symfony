@@ -21,6 +21,7 @@ class ContratController extends AbstractController
         return $this->render('afficher_contrats.html.twig', [
             'contrats' => $contrats,
             'etat' => $etat,
+
         ]);
     }
 

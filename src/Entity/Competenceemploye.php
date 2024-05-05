@@ -14,36 +14,36 @@ class Competenceemploye
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'competenceemployes')]
-    private ?employes $id_employe = null;
+    private ?employes $employe = null;
 
     #[ORM\ManyToOne(inversedBy: 'competenceemployes')]
-    private ?competences $id_competence = null;
+    private ?competences $competence = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdEmploye(): ?employes
+    public function getEmploye(): ?employes
     {
-        return $this->id_employe;
+        return $this->employe;
     }
 
-    public function setIdEmploye(?employes $id_employe): static
+    public function setEmploye(?employes $employe): static
     {
-        $this->id_employe = $id_employe;
+        $this->employe = $employe;
 
         return $this;
     }
 
-    public function getIdCompetence(): ?competences
+    public function getCompetence(): ?competences
     {
-        return $this->id_competence;
+        return $this->competence;
     }
 
-    public function setIdCompetence(?competences $id_competence): static
+    public function setCompetence(?competences $competence): static
     {
-        $this->id_competence = $id_competence;
+        $this->competence = $competence;
 
         return $this;
     }

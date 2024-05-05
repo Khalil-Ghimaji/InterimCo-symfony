@@ -2,7 +2,6 @@
 // src/Controller/ContratController.php
 
 namespace App\Controller;
-
 use App\Repository\CompetencesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,6 +9,7 @@ use App\Repository\ContratsRepository;
 use App\Entity\Contrats; // Importez la classe Contrat
 use App\Repository\PrestationsRepository;
 use App\Entity\Prestations;
+use Doctrine\ORM\EntityManagerInterface;;
 
 
 class PrestationController extends AbstractController
@@ -29,6 +29,20 @@ class PrestationController extends AbstractController
         return $this->render('traiter_prestation.html.twig', [
             'prestation' => $prestation,
             'competencesRepository' => $competencesRepository,
+        ]);
+    }
+
+    #[Route('/prestations/{id}/employes', name: 'prestation_employes')]
+    public function getEmployesAdequats($id, EntityManagerInterface $entityManager)
+    {
+        // Récupérer la prestation
+        $prestation = $entityManager->getRepository(Prestations::class)->find($id);
+
+        // Récupérer les données de la compétence associée à la prestation
+        $competenceId = $prestation->getCompetence()->getId();
+
+        return $this->render('employes_adequats.html.twig', [
+            'prestation' => $prestation,
         ]);
     }
 }

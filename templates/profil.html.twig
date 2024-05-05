@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{% block body %}
+    {% include 'entete.twig' %}
+
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6">
+                <div class="card shadow p-3 mb-5 bg-white rounded">
+                    <div class="card-body">
+                        <h1 class="card-title">Mon Profil</h1>
+                        <div class="detail">
+                            <strong>Nom d'Utilisateur:</strong>
+                            <span>{{ agentDrh.username }}</span>
+                        </div>
+                        <div class="detail">
+                            <strong>Nom :</strong>
+                            <span>{{ agentDrh.nom }}</span>
+                        </div>
+                        <div class="detail">
+                            <strong>Prénom :</strong>
+                            <span>{{ agentDrh.prenom }}</span>
+                        </div>
+                        <div class="detail">
+                            <strong>Email:</strong>
+                            <span>{{ agentDrh.email }}</span>
+                        </div>
+                        <div class="detail">
+                            <strong>Numéro de Téléphone:</strong>
+                            <span>{{ agentDrh.numeroTelephone }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+
+{% endblock %}

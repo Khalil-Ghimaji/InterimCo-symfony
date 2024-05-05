@@ -36,7 +36,7 @@ class Clients
     /**
      * @var Collection<int, Contrats>
      */
-    #[ORM\OneToMany(targetEntity: Contrats::class, mappedBy: 'id_client')]
+    #[ORM\OneToMany(targetEntity: Contrats::class, mappedBy: 'client')]
     private Collection $contrats;
 
     public function __construct()

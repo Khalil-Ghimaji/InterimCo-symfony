@@ -36,22 +36,28 @@ class Employes
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date_inscription = null;
 
-    /**
-     * @var Collection<int, Employeprestation>
-     */
-    #[ORM\OneToMany(targetEntity: Employeprestation::class, mappedBy: 'id_employe')]
-    private Collection $employeprestations;
+
+
 
     /**
-     * @var Collection<int, Competenceemploye>
+     * @var Collection<int, Prestations>
      */
-    #[ORM\OneToMany(targetEntity: Competenceemploye::class, mappedBy: 'id_employe')]
-    private Collection $competenceemployes;
+    #[ORM\ManyToMany(targetEntity: Prestations::class, mappedBy: 'employe')]
+    private Collection $prestations;
+
+    /**
+     * @var Collection<int, Competences>
+     */
+    #[ORM\ManyToMany(targetEntity: Competences::class, mappedBy: 'employe')]
+    private Collection $competences;
+
+
 
     public function __construct()
     {
-        $this->employeprestations = new ArrayCollection();
-        $this->competenceemployes = new ArrayCollection();
+
+        $this->prestations = new ArrayCollection();
+        $this->competences = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -133,63 +139,60 @@ class Employes
         return $this;
     }
 
-    /**
-     * @return Collection<int, Employeprestation>
-     */
-    public function getEmployeprestations(): Collection
-    {
-        return $this->employeprestations;
-    }
 
-    public function addEmployeprestation(Employeprestation $employeprestation): static
-    {
-        if (!$this->employeprestations->contains($employeprestation)) {
-            $this->employeprestations->add($employeprestation);
-            $employeprestation->setIdEmploye($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEmployeprestation(Employeprestation $employeprestation): static
-    {
-        if ($this->employeprestations->removeElement($employeprestation)) {
-            // set the owning side to null (unless already changed)
-            if ($employeprestation->getIdEmploye() === $this) {
-                $employeprestation->setIdEmploye(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
-     * @return Collection<int, Competenceemploye>
+     * @return Collection<int, Prestations>
      */
-    public function getCompetenceemployes(): Collection
+    public function getPrestations(): Collection
     {
-        return $this->competenceemployes;
+        return $this->prestations;
     }
 
-    public function addCompetenceemploye(Competenceemploye $competenceemploye): static
+    public function addPrestation(Prestations $prestation): static
     {
-        if (!$this->competenceemployes->contains($competenceemploye)) {
-            $this->competenceemployes->add($competenceemploye);
-            $competenceemploye->setIdEmploye($this);
+        if (!$this->prestations->contains($prestation)) {
+            $this->prestations->add($prestation);
+            $prestation->addEmploye($this);
         }
 
         return $this;
     }
 
-    public function removeCompetenceemploye(Competenceemploye $competenceemploye): static
+    public function removePrestation(Prestations $prestation): static
     {
-        if ($this->competenceemployes->removeElement($competenceemploye)) {
-            // set the owning side to null (unless already changed)
-            if ($competenceemploye->getIdEmploye() === $this) {
-                $competenceemploye->setIdEmploye(null);
-            }
+        if ($this->prestations->removeElement($prestation)) {
+            $prestation->removeEmploye($this);
         }
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Competences>
+     */
+    public function getCompetences(): Collection
+    {
+        return $this->competences;
+    }
+
+    public function addCompetence(Competences $competence): static
+    {
+        if (!$this->competences->contains($competence)) {
+            $this->competences->add($competence);
+            $competence->addEmploye($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompetence(Competences $competence): static
+    {
+        if ($this->competences->removeElement($competence)) {
+            $competence->removeEmploye($this);
+        }
+
+        return $this;
+    }
+
 }

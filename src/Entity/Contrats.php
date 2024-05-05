@@ -17,7 +17,7 @@ class Contrats
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'contrats')]
-    private ?Clients $id_client = null;
+    private ?Clients $client = null;
 
     #[ORM\Column(length: 255)]
     private ?string $libelle = null;
@@ -38,18 +38,18 @@ class Contrats
     private ?float $prix_final = null;
 
     #[ORM\ManyToOne(inversedBy: 'contrats')]
-    private ?Agentsdrh $id_agent_drh = null;
+    private ?Agentsdrh $agent_drh = null;
 
     /**
      * @var Collection<int, Prestations>
      */
-    #[ORM\OneToMany(targetEntity: Prestations::class, mappedBy: 'id_contrat')]
+    #[ORM\OneToMany(targetEntity: Prestations::class, mappedBy: 'contrat')]
     private Collection $prestations;
 
     /**
      * @var Collection<int, Notifications>
      */
-    #[ORM\OneToMany(targetEntity: Notifications::class, mappedBy: 'id_contrat')]
+    #[ORM\OneToMany(targetEntity: Notifications::class, mappedBy: 'contrat')]
     private Collection $notifications;
 
     public function __construct()
@@ -63,14 +63,14 @@ class Contrats
         return $this->id;
     }
 
-    public function getIdClient(): ?Clients
+    public function getClient(): ?Clients
     {
-        return $this->id_client;
+        return $this->client;
     }
 
-    public function setIdClient(?Clients $id_client): static
+    public function setClient(?Clients $client): static
     {
-        $this->id_client = $id_client;
+        $this->client = $client;
 
         return $this;
     }
@@ -147,14 +147,14 @@ class Contrats
         return $this;
     }
 
-    public function getIdAgentDrh(): ?Agentsdrh
+    public function getAgentDrh(): ?Agentsdrh
     {
-        return $this->id_Agent_drh;
+        return $this->Agent_drh;
     }
 
-    public function setIdAgentDrh(?Agentsdrh $id_Agent_drh): static
+    public function setAgentDrh(?Agentsdrh $Agent_drh): static
     {
-        $this->id_Agent_drh = $id_Agent_drh;
+        $this->Agent_drh = $Agent_drh;
 
         return $this;
     }
@@ -171,7 +171,7 @@ class Contrats
     {
         if (!$this->prestations->contains($prestation)) {
             $this->prestations->add($prestation);
-            $prestation->setIdContrat($this);
+            $prestation->setContrat($this);
         }
 
         return $this;
@@ -181,8 +181,8 @@ class Contrats
     {
         if ($this->prestations->removeElement($prestation)) {
             // set the owning side to null (unless already changed)
-            if ($prestation->getIdContrat() === $this) {
-                $prestation->setIdContrat(null);
+            if ($prestation->getContrat() === $this) {
+                $prestation->setContrat(null);
             }
         }
 
@@ -201,7 +201,7 @@ class Contrats
     {
         if (!$this->notifications->contains($notification)) {
             $this->notifications->add($notification);
-            $notification->setIdContrat($this);
+            $notification->setContrat($this);
         }
 
         return $this;
@@ -211,8 +211,8 @@ class Contrats
     {
         if ($this->notifications->removeElement($notification)) {
             // set the owning side to null (unless already changed)
-            if ($notification->getIdContrat() === $this) {
-                $notification->setIdContrat(null);
+            if ($notification->getContrat() === $this) {
+                $notification->setContrat(null);
             }
         }
 
