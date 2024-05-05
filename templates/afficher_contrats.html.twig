@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contrats {% if etat %}{{ etat }}{% endif %}{% endblock %}
+
+{% block body %}
+    {% include 'entete.twig' %}
+    <h1 class="text-center">Liste des Contrats {% if etat %}{{ etat }}{% endif %}</h1>
+
+    {% if contrats is empty %}
+        <div class="container">
+            <div class="alert alert-info" role="alert">
+                Aucun contrat trouvé pour cet état.
+            </div>
+        </div>
+    {% else %}
+        <div class="container">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Libellé</th>
+                    <th scope="col">Date de soumission</th>
+                    <th scope="col">Date de réponse</th>
+                    <th scope="col">Prix (dinars)</th>
+                    <th scope="col">Traiter Contrat</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for contrat in contrats %}
+                    <tr>
+                        <td>{{ contrat.id }}</td>
+                        <td>{{ contrat.libelle }}</td>
+                        <td>{{ contrat.dateSoumission|date('Y-m-d') }}</td>
+                        <td>{{ contrat.dateReponse|date('Y-m-d') }}</td>
+                        <td>{{ contrat.prix }}</td>
+                        <td>
+                            <form action="{{ path('traiter_contrat', {'id': contrat.id}) }}" method="post">
+                                <button type="submit" class="btn btn-primary">Traiter Contrat</button>
+                            </form>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}
+{% block javascripts %}
+
+{% endblock %}

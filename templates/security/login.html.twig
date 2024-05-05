@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            background-color: #cbc5c5; /* Changer la couleur de fond */
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid d-flex align-items-center justify-content-center" style="height: 100vh;">
+        <div class="card p-4 shadow" style="max-width: 400px;">
+            <h2 class="text-center mb-4">Bienvenue dans Interim-Co</h2>
+            <p class="text-center mb-4">Connectez-vous en tant qu'agent DRH</p>
+            <form method="post" class="form-signin">
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %}
+
+                {% if app.user %}
+                    <div class="alert alert-info" role="alert">
+                        You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                {% endif %}
+
+                <h3 class="h5 mb-3 font-weight-normal text-center">Please sign in</h3>
+                <label for="inputUsername" class="sr-only">Username</label>
+                <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control mb-2" placeholder="Username" autocomplete="username" required autofocus>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" name="password" id="inputPassword" class="form-control mb-3" placeholder="Password" autocomplete="current-password" required>
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <div class="form-group form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="rememberMe" name="_remember_me">
+                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                </div>
+
+                <button class="btn btn-lg btn-primary btn-block" type="submit">
+                    Sign in
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+{% endblock %}

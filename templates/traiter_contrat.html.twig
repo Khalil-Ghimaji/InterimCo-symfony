@@ -1,0 +1,50 @@
+<div class="container">
+    <h2>Détails du Contrat</h2>
+    <p>ID : {{ contrat.id }}</p>
+    <p>Libellé : {{ contrat.libelle }}</p>
+    <p>Date de Soumission : {{ contrat.dateSoumission|date('Y-m-d') }}</p>
+    <p>Date de Reponse : {{ contrat.dateReponse|date('Y-m-d') }}</p>
+    <p>Prix(dinars) : {{ contrat.prix }}</p>
+</div>
+<div class="container">
+    {% if contrat.prestations is empty %}
+        <h2>Aucune prestation trouvée pour ce contrat.</h2>
+    {% else %}
+        <h2>Prestations:</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date de Début</th>
+                <th>Date de Fin</th>
+                <th>Durée(jours)</th>
+                <th>Prix(dinars)</th>
+                <th>Description</th>
+                <th>Compétence requise</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for prestation in contrat.prestations %}
+                <tr>
+                    <td>{{ prestation.id }}</td>
+                    <td>{{ prestation.dateDebut|date('Y-m-d') }}</td>
+                    <td>{{ prestation.dateFin|date('Y-m-d') }}</td>
+                    <td>{{ prestation.duree }}</td>
+                    <td>{{ prestation.prix }}</td>
+                    <td>{{ prestation.description }}</td>
+{#                    <td>{{ prestation.getCompetence(competencesRepository).nom }} ({{ prestation.getCompetence(competencesRepository).niveau }})</td>#}
+{#                    <td>123</td>#}
+                    <td>
+{#                        <form action="{{ path('detail_prestation') }}" method="post">#}
+{#                            <input type="hidden" name="id_prestation" value="{{ prestation.id }}">#}
+{#                            <input type="submit" value="Detail Prestation" class="btn btn-primary">#}
+{#                        </form>#}
+                        456
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
