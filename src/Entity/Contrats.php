@@ -39,7 +39,7 @@ class Contrats
     private ?Clients $client = null;
 
     #[ORM\ManyToOne(inversedBy: 'contrats')]
-    private ?agentsdrh $agent_drh = null;
+    private ?Agentsdrh $agent_drh = null;
 
     #[ORM\OneToMany(targetEntity: Prestations::class, mappedBy: 'contrat')]
     private Collection $prestations;

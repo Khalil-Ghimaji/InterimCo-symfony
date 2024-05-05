@@ -71,13 +71,13 @@
                     <a class="nav-link navigation-title" href="{{ path('app_home') }}">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link navigation-title" href="#">Liste des Contrats</a>
+                    <a class="nav-link navigation-title" href="{{ path('app_contract') }}">Liste des Contrats</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link navigation-title" href="#">Nouveau Contrat</a>
+                    <a class="nav-link navigation-title" href="#{# path('ajout_contrat') #}">Nouveau Contrat</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link navigation-title" href="#">Tarifs</a>
+                    <a class="nav-link navigation-title" href="#{# path('app_tarif') #}">Tarifs</a>
                 </li>
             </ul>
             <ul class="navbar-nav mr-auto col-auto">
@@ -112,7 +112,7 @@
                     </a>
                     <div aria-labelledby="profil-dropdown">
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Mon Profil</a></li>
+                            <li><a class="dropdown-item" href="#{# path('app_user_profile') #}">Mon Profil</a></li>
                             <li><a class="dropdown-item" href="{{ path('app_logout') }}">Se Déconnecter</a></li>
                         </ul>
                     </div>

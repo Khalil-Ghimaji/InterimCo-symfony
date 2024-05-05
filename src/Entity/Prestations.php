@@ -38,13 +38,13 @@ class Prestations
     private ?float $prix_final = null;
 
     #[ORM\ManyToOne(inversedBy: 'prestations')]
-    private ?competences $competence = null;
+    private ?Competences $competence = null;
 
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'prestations')]
-    private ?contrats $contrat = null;
+    private ?Contrats $contrat = null;
 
     #[ORM\ManyToMany(targetEntity: Employes::class, mappedBy: 'prestations')]
     private Collection $employes;
