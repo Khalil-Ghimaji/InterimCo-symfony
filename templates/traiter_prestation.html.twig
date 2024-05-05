@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la Prestation{% endblock %}
+
+{% block body %}
+    {% include 'entete.twig' %}
+
+    <div class="container">
+        <h1 class="text-center">Détails de la Prestation</h1>
+        <div class="container">
+            <h2>Informations sur la Prestation</h2>
+            <p><strong>ID :</strong> {{ prestation.id }}</p>
+            <p><strong>Date de Début :</strong> {{ prestation.dateDebut|date('Y-m-d') }}</p>
+            <p><strong>Date de Fin :</strong> {{ prestation.dateFin|date('Y-m-d') }}</p>
+            <p><strong>Durée (jours) :</strong> {{ prestation.duree }}</p>
+            <p><strong>Prix (dinars) :</strong> {{ prestation.prix }}</p>
+            <p><strong>Description :</strong> {{ prestation.description }}</p>
+            <p><strong>Compétence requise :</strong> {{ prestation.getCompetence(competencesRepository).getCompetence() }} ({{ prestation.getCompetence(competencesRepository).getNiveauCompetence() }})</p>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+
+{% endblock %}

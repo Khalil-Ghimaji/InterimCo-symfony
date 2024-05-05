@@ -38,22 +38,22 @@ class ContratController extends AbstractController
 
         ]);
     }
-    #[Route('/contrat/{id}', name: 'afficher_contrat')]
-    public function afficherContrat($id, ContratRepository $contratsRepository,CompetencesRepository $competencesRepository)
-    {
-        $contrat = $contratsRepository->findById($id);
-
-        if (!$contrat) {
-            throw $this->createNotFoundException('Contrat non trouvé pour l\'ID ' . $id);
-        }
-
-        // Récupérer les prestations associées au contrat
-        $prestations = $contrat->getPrestations();
-
-        return $this->render('afficher_contrat.html.twig', [
-            'contrat' => $contrat,
-            'prestations' => $prestations,
-        ]);
-    }
+//    #[Route('/contrat/{id}', name: 'afficher_contrat')]
+//    public function afficherContrat($id, ContratsRepository $contratsRepository,CompetencesRepository $competencesRepository)
+//    {
+//        $contrat = $contratsRepository->findById($id);
+//
+//        if (!$contrat) {
+//            throw $this->createNotFoundException('Contrat non trouvé pour l\'ID ' . $id);
+//        }
+//
+//        // Récupérer les prestations associées au contrat
+//        $prestations = $contrat->getPrestations();
+//
+//        return $this->render('afficher_contrat.html.twig', [
+//            'contrat' => $contrat,
+//            'prestations' => $prestations,
+//        ]);
+//    }
 
 }

@@ -35,9 +35,14 @@
                         <td>{{ contrat.prix }}</td>
                         <td>
                             <form action="{{ path('traiter_contrat', {'id': contrat.id}) }}" method="post">
-                                <button type="submit" class="btn btn-primary">Traiter Contrat</button>
+                                <button type="submit" class="btn btn-primary">
+                                    {% if contrat.etatContrat == 'en_cours_de_traitement' %}
+                                        Traiter Contrat
+                                    {% else %}
+                                        Détail Contrat
+                                    {% endif %}
+                                </button>
                             </form>
-
                         </td>
                     </tr>
                 {% endfor %}

@@ -42,7 +42,7 @@ class Prestations
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'prestations')]
-    private ?contrats $id_contrat = null;
+    private ?Contrats $id_contrat = null;
 
     /**
      * @var Collection<int, Employeprestation>
@@ -213,9 +213,11 @@ class Prestations
 
         return $this;
     }
-    public function getCompetence(CompetencesRepository $competenceRepository): ?Competences
+    public function getCompetence(CompetencesRepository $competencesRepository): ?Competences
     {
         // Récupérer la compétence à partir de son ID
-        return $competenceRepository->findById($this->idCompetence);
+        return $competencesRepository->findById($this->id_competence);
     }
+
+
 }
