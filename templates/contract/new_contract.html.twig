@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Nouveau Contrat</h1>
+    {{ form_errors(contractForm) }}
+
+    {{ form_start(contractForm) }}
+    {{ form_row(contractForm.libelle) }}
+    <div id="contract_prestations" data-prototype="{{ form_widget(contractForm.prestations.vars.prototype)|e('html_attr') }}">
+        {# Existing Prestations #}
+{#        {% for prestationForm in contractForm.prestations %}#}
+{#            {{ form_row(prestationForm.description) }}#}
+{#            {{ form_row(prestationForm.description) }}#}
+{#            {{ form_row(prestationForm.description) }}#}
+
+{#        {% endfor %}#}
+    </div>
+    <button type="button" id="add-prestation-btn">Add Prestation</button>
+    <button type="submit">Enregistrer Contrat</button>
+    {{ form_end(contractForm) }}
+
+
+    <script>
+            // Get the container for Prestations
+            var prestationsContainer = document.getElementById('contract_prestations');
+
+
+            // Add Prestation button click event
+            document.getElementById('add-prestation-btn').addEventListener('click',function(e) {
+                var prototype = prestationsContainer.getAttribute('data-prototype');
+                var index = prestationsContainer.children.length;
+
+                var newForm = prototype.replace(/__name__/g, index);
+                var tempDiv = document.createElement('div');
+                tempDiv.innerHTML = newForm;
+
+                prestationsContainer.appendChild(tempDiv.firstChild);
+
+                e.preventDefault();
+            });
+    </script>
+{% endblock %}
