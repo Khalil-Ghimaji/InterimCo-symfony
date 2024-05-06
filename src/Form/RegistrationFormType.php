@@ -20,7 +20,7 @@ class RegistrationFormType extends AbstractType
             ->add('nom')
             ->add('email')
             ->add('locale')
-            ->add('numero_telephone')
+            ->add('numeroTelephone')
             ->add('username')
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,

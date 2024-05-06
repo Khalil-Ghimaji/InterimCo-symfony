@@ -18,7 +18,7 @@ class Notifications
     private ?string $message = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $date_envoi = null;
+    private ?\DateTimeInterface $dateEnvoi = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
@@ -43,12 +43,12 @@ class Notifications
 
     public function getDateEnvoi(): ?\DateTimeInterface
     {
-        return $this->date_envoi;
+        return $this->dateEnvoi;
     }
 
-    public function setDateEnvoi(\DateTimeInterface $date_envoi): static
+    public function setDateEnvoi(\DateTimeInterface $dateEnvoi): static
     {
-        $this->date_envoi = $date_envoi;
+        $this->dateEnvoi = $dateEnvoi;
 
         return $this;
     }

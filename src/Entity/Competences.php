@@ -19,10 +19,10 @@ class Competences
     private ?string $competence = null;
 
     #[ORM\Column]
-    private ?int $niveau_competence = null;
+    private ?int $niveauCompetence = null;
 
     #[ORM\Column]
-    private ?float $prix_estime = null;
+    private ?float $prixEstime = null;
 
     #[ORM\ManyToMany(targetEntity: employes::class, inversedBy: 'competences')]
     private Collection $employes;
@@ -55,24 +55,24 @@ class Competences
 
     public function getNiveauCompetence(): ?int
     {
-        return $this->niveau_competence;
+        return $this->niveauCompetence;
     }
 
-    public function setNiveauCompetence(int $niveau_competence): static
+    public function setNiveauCompetence(int $niveauCompetence): static
     {
-        $this->niveau_competence = $niveau_competence;
+        $this->niveauCompetence = $niveauCompetence;
 
         return $this;
     }
 
     public function getPrixEstime(): ?float
     {
-        return $this->prix_estime;
+        return $this->prixEstime;
     }
 
-    public function setPrixEstime(float $prix_estime): static
+    public function setPrixEstime(float $prixEstime): static
     {
-        $this->prix_estime = $prix_estime;
+        $this->prixEstime = $prixEstime;
 
         return $this;
     }

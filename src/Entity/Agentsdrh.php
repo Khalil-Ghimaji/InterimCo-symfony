@@ -25,7 +25,7 @@ class Agentsdrh
     private ?string $email = null;
 
     #[ORM\Column]
-    private ?int $numero_telephone = null;
+    private ?int $numeroTelephone = null;
 
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
@@ -33,7 +33,7 @@ class Agentsdrh
     #[ORM\Column(length: 255)]
     private ?string $prenom = null;
 
-    #[ORM\OneToMany(targetEntity: Contrats::class, mappedBy: 'agent_drh')]
+    #[ORM\OneToMany(targetEntity: Contrats::class, mappedBy: 'agentDrh')]
     private Collection $contrats;
 
     public function __construct()
@@ -84,12 +84,12 @@ class Agentsdrh
 
     public function getNumeroTelephone(): ?int
     {
-        return $this->numero_telephone;
+        return $this->numeroTelephone;
     }
 
-    public function setNumeroTelephone(int $numero_telephone): static
+    public function setNumeroTelephone(int $numeroTelephone): static
     {
-        $this->numero_telephone = $numero_telephone;
+        $this->numeroTelephone = $numeroTelephone;
 
         return $this;
     }

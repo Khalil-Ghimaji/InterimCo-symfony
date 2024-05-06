@@ -32,7 +32,7 @@ class Clients implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $numero_telephone = null;
+    private ?int $numeroTelephone = null;
 
     #[ORM\Column(length: 255)]
     private ?string $locale = null;
@@ -123,12 +123,12 @@ class Clients implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getNumeroTelephone(): ?int
     {
-        return $this->numero_telephone;
+        return $this->numeroTelephone;
     }
 
-    public function setNumeroTelephone(?int $numero_telephone): static
+    public function setNumeroTelephone(?int $numeroTelephone): static
     {
-        $this->numero_telephone = $numero_telephone;
+        $this->numeroTelephone = $numeroTelephone;
 
         return $this;
     }

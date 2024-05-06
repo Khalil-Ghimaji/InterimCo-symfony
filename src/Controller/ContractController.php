@@ -46,7 +46,7 @@ class ContractController extends AbstractController
                 ->setEtatContrat("En attente de validation");
             $this->manager->persist($contrat);
             $this->manager->flush();
-            return new $this->redirectToRoute('app_contrat');
+            return $this->redirectToRoute('app_contract');
         }
 
         return $this->render('contract/new_contract.html.twig', [

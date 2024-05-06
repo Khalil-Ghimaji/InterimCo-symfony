@@ -20,26 +20,26 @@ class Contrats
     private ?string $libelle = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $date_soumission = null;
+    private ?\DateTimeInterface $dateSoumission = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $date_reponse = null;
+    private ?\DateTimeInterface $dateReponse = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $etat_contrat = null;
+    private ?string $etatContrat = null;
 
     #[ORM\Column(nullable: true)]
     private ?float $prix = null;
 
     #[ORM\Column(nullable: true)]
-    private ?float $prix_final = null;
+    private ?float $prixFinal = null;
 
     #[ORM\ManyToOne(inversedBy: 'contrats')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Clients $client = null;
 
     #[ORM\ManyToOne(inversedBy: 'contrats')]
-    private ?Agentsdrh $agent_drh = null;
+    private ?Agentsdrh $agentDrh = null;
 
     #[ORM\OneToMany(targetEntity: Prestations::class, mappedBy: 'contrat')]
     private Collection $prestations;
@@ -68,36 +68,36 @@ class Contrats
 
     public function getDateSoumission(): ?\DateTimeInterface
     {
-        return $this->date_soumission;
+        return $this->dateSoumission;
     }
 
-    public function setDateSoumission(?\DateTimeInterface $date_soumission): static
+    public function setDateSoumission(?\DateTimeInterface $dateSoumission): static
     {
-        $this->date_soumission = $date_soumission;
+        $this->dateSoumission = $dateSoumission;
 
         return $this;
     }
 
     public function getDateReponse(): ?\DateTimeInterface
     {
-        return $this->date_reponse;
+        return $this->dateReponse;
     }
 
-    public function setDateReponse(?\DateTimeInterface $date_reponse): static
+    public function setDateReponse(?\DateTimeInterface $dateReponse): static
     {
-        $this->date_reponse = $date_reponse;
+        $this->dateReponse = $dateReponse;
 
         return $this;
     }
 
     public function getEtatContrat(): ?string
     {
-        return $this->etat_contrat;
+        return $this->etatContrat;
     }
 
-    public function setEtatContrat(string $etat_contrat): static
+    public function setEtatContrat(string $etatContrat): static
     {
-        $this->etat_contrat = $etat_contrat;
+        $this->etatContrat = $etatContrat;
 
         return $this;
     }
@@ -116,12 +116,12 @@ class Contrats
 
     public function getPrixFinal(): ?float
     {
-        return $this->prix_final;
+        return $this->prixFinal;
     }
 
-    public function setPrixFinal(?float $prix_final): static
+    public function setPrixFinal(?float $prixFinal): static
     {
-        $this->prix_final = $prix_final;
+        $this->prixFinal = $prixFinal;
 
         return $this;
     }
@@ -140,12 +140,12 @@ class Contrats
 
     public function getAgentDrh(): ?agentsdrh
     {
-        return $this->agent_drh;
+        return $this->agentDrh;
     }
 
-    public function setAgentDrh(?agentsdrh $agent_drh): static
+    public function setAgentDrh(?agentsdrh $agentDrh): static
     {
-        $this->agent_drh = $agent_drh;
+        $this->agentDrh = $agentDrh;
 
         return $this;
     }

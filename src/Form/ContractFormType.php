@@ -14,13 +14,13 @@ class ContractFormType extends AbstractType
     {
         $builder
             ->add('libelle')
-//            ->add('date_soumission')
-//            ->add('date_reponse')
-//            ->add('etat_contrat')
+//            ->add('dateSoumission')
+//            ->add('dateReponse')
+//            ->add('etatContrat')
 //            ->add('prix')
-//            ->add('prix_final')
+//            ->add('prixFinal')
 //            ->add('client')
-//            ->add('agent_drh')
+//            ->add('agentDrh')
             ->add('prestations', CollectionType::class, [
                 'entry_type' => PrestationFormType::class,
                 'allow_add' => true,

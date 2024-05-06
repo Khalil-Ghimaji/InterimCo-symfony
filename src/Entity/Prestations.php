@@ -17,16 +17,16 @@ class Prestations
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $date_debut = null;
+    private ?\DateTimeInterface $dateDebut = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $date_fin = null;
+    private ?\DateTimeInterface $dateFin = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $date_deb_finale = null;
+    private ?\DateTimeInterface $dateDebFinale = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $date_fin_finale = null;
+    private ?\DateTimeInterface $dateFinFinale = null;
 
     #[ORM\Column]
     private ?int $duree = null;
@@ -35,7 +35,7 @@ class Prestations
     private ?float $prix = null;
 
     #[ORM\Column(nullable: true)]
-    private ?float $prix_final = null;
+    private ?float $prixFinal = null;
 
     #[ORM\ManyToOne(inversedBy: 'prestations')]
     private ?Competences $competence = null;
@@ -61,48 +61,48 @@ class Prestations
 
     public function getDateDebut(): ?\DateTimeInterface
     {
-        return $this->date_debut;
+        return $this->dateDebut;
     }
 
-    public function setDateDebut(?\DateTimeInterface $date_debut): static
+    public function setDateDebut(?\DateTimeInterface $dateDebut): static
     {
-        $this->date_debut = $date_debut;
+        $this->dateDebut = $dateDebut;
 
         return $this;
     }
 
     public function getDateFin(): ?\DateTimeInterface
     {
-        return $this->date_fin;
+        return $this->dateFin;
     }
 
-    public function setDateFin(?\DateTimeInterface $date_fin): static
+    public function setDateFin(?\DateTimeInterface $dateFin): static
     {
-        $this->date_fin = $date_fin;
+        $this->dateFin = $dateFin;
 
         return $this;
     }
 
     public function getDateDebFinale(): ?\DateTimeInterface
     {
-        return $this->date_deb_finale;
+        return $this->dateDebFinale;
     }
 
-    public function setDateDebFinale(?\DateTimeInterface $date_deb_finale): static
+    public function setDateDebFinale(?\DateTimeInterface $dateDebFinale): static
     {
-        $this->date_deb_finale = $date_deb_finale;
+        $this->dateDebFinale = $dateDebFinale;
 
         return $this;
     }
 
     public function getDateFinFinale(): ?\DateTimeInterface
     {
-        return $this->date_fin_finale;
+        return $this->dateFinFinale;
     }
 
-    public function setDateFinFinale(?\DateTimeInterface $date_fin_finale): static
+    public function setDateFinFinale(?\DateTimeInterface $dateFinFinale): static
     {
-        $this->date_fin_finale = $date_fin_finale;
+        $this->dateFinFinale = $dateFinFinale;
 
         return $this;
     }
@@ -133,12 +133,12 @@ class Prestations
 
     public function getPrixFinal(): ?float
     {
-        return $this->prix_final;
+        return $this->prixFinal;
     }
 
-    public function setPrixFinal(?float $prix_final): static
+    public function setPrixFinal(?float $prixFinal): static
     {
-        $this->prix_final = $prix_final;
+        $this->prixFinal = $prixFinal;
 
         return $this;
     }

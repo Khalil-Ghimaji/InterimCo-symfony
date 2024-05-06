@@ -23,28 +23,20 @@ class PrestationFormType extends AbstractType
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')
                         ->orderBy('c.competence', 'ASC')
-                        ->orderBy('c.niveau_competence','ASC');
+                        ->orderBy('c.niveauCompetence','ASC');
                 },
                 'choice_label' => function (Competences $competence) {
                     return $competence->getCompetence() . ' - ' . $competence->getNiveauCompetence();
                 },
                 'placeholder' => 'Select competence', // Optional placeholder text
             ])
-            ->add('date_debut',DateType::class,[
+            ->add('dateDebut',DateType::class,[
                 'widget'=>'single_text'
             ])
-            ->add('date_fin',DateType::class,[
+            ->add('dateFin',DateType::class,[
                 'widget'=>'single_text'
             ])
-            //->add('date_deb_finale')
-            //->add('date_fin_finale')
-            ->add('duree')
-            //->add('prix')
-            //->add('prix_final')
-
-            //->add('contrat')
-            //->add('employes')
-        ;
+            ->add('duree');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

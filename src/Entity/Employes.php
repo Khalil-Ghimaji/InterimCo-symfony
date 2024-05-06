@@ -26,13 +26,13 @@ class Employes
     private ?string $email = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date_inscription = null;
+    private ?\DateTimeInterface $dateInscription = null;
 
     #[ORM\Column(length: 255)]
     private ?string $adresse = null;
 
     #[ORM\Column]
-    private ?int $numero_telephone = null;
+    private ?int $numeroTelephone = null;
 
     #[ORM\ManyToMany(targetEntity: Competences::class, mappedBy: 'employes')]
     private Collection $competences;
@@ -89,12 +89,12 @@ class Employes
 
     public function getDateInscription(): ?\DateTimeInterface
     {
-        return $this->date_inscription;
+        return $this->dateInscription;
     }
 
-    public function setDateInscription(\DateTimeInterface $date_inscription): static
+    public function setDateInscription(\DateTimeInterface $dateInscription): static
     {
-        $this->date_inscription = $date_inscription;
+        $this->dateInscription = $dateInscription;
 
         return $this;
     }
@@ -113,12 +113,12 @@ class Employes
 
     public function getNumeroTelephone(): ?int
     {
-        return $this->numero_telephone;
+        return $this->numeroTelephone;
     }
 
-    public function setNumeroTelephone(int $numero_telephone): static
+    public function setNumeroTelephone(int $numeroTelephone): static
     {
-        $this->numero_telephone = $numero_telephone;
+        $this->numeroTelephone = $numeroTelephone;
 
         return $this;
     }
