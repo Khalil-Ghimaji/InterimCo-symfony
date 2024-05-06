@@ -82,4 +82,12 @@ class ContractController extends AbstractController
             'existingContract' => $contract, // Pass the existing contract to the template
         ]);
     }
+    #[Route('/delete/{id}',name:'delete_contract')]
+    function delete(int $id,Request $request):Response
+    {
+        $contract = $this->contractRepo->find($id);
+        $this->manager->remove($contract);
+        $this->manager->flush();
+        return $this->redirectToRoute('app_contract');
+    }
 }

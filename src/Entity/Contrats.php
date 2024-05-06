@@ -41,7 +41,7 @@ class Contrats
     #[ORM\ManyToOne(inversedBy: 'contrats')]
     private ?Agentsdrh $agentDrh = null;
 
-    #[ORM\OneToMany(targetEntity: Prestations::class, mappedBy: 'contrat')]
+    #[ORM\OneToMany(targetEntity: Prestations::class, mappedBy: 'contrat',orphanRemoval: true)]
     private Collection $prestations;
 
     public function __construct()
