@@ -6,16 +6,8 @@
     {{ form_start(contractForm) }}
     {{ form_row(contractForm.libelle) }}
     {{ form_row(contractForm.prestations) }}
-{#    <div id="contract_prestations" data-prototype="{{ form_widget(contractForm.prestations.vars.prototype)|e('html_attr') }}">#}
-        {# Existing Prestations #}
-{#        {% for prestationForm in contractForm.prestations %}#}
-{#            {{ form_row(prestationForm.description) }}#}
-{#            {{ form_row(prestationForm.description) }}#}
-{#            {{ form_row(prestationForm.description) }}#}
-{#        {% endfor %}#}
-{#    </div>#}
     <button type="button" id="add-prestation-btn">Add Prestation</button>
-    <button id="submit_button">Enregistrer Contrat</button>
+    <button>Enregistrer Contrat</button>
     {{ form_end(contractForm) }}
     <script>
             // Get the container for Prestations
@@ -44,9 +36,6 @@
 
                 e.preventDefault();
             });
-            document.getElementById("submit_button").addEventListener("click",()=>{
-                document.getElementsByName("contract_form").submit;
-            })
             add_button.click();
     </script>
 {% endblock %}
