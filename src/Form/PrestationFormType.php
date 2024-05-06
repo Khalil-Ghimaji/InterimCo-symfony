@@ -30,8 +30,12 @@ class PrestationFormType extends AbstractType
                 },
                 'placeholder' => 'Select competence', // Optional placeholder text
             ])
-            ->add('date_debut')
-            ->add('date_fin')
+            ->add('date_debut',DateType::class,[
+                'widget'=>'single_text'
+            ])
+            ->add('date_fin',DateType::class,[
+                'widget'=>'single_text'
+            ])
             //->add('date_deb_finale')
             //->add('date_fin_finale')
             ->add('duree')

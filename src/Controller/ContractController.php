@@ -36,10 +36,13 @@ class ContractController extends AbstractController
         $form_contrat = $this->createForm(contractFormType::class,$contrat);
         $form_contrat->handleRequest($request);
         if ($form_contrat->isSubmitted() && $form_contrat->isValid()) {
+            foreach($contrat->getPrestations()as $prestation){
+                $prestation->setPrix($prestation->getCompetence()->getPrixEstime()*$prestation->getDuree());
+                $this->manager->persist($prestation);
+                $contrat->setPrix($contrat->getPrix()+$prestation->getPrix());
+            }
             $contrat
                 ->setClient($this->getUser())
-                ->setLibelle($form_contrat->get('libelle')->getData())
-                ->setPrix(100)
                 ->setEtatContrat("En attente de validation");
             $this->manager->persist($contrat);
             $this->manager->flush();

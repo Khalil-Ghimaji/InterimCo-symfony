@@ -5,37 +5,48 @@
 
     {{ form_start(contractForm) }}
     {{ form_row(contractForm.libelle) }}
-    <div id="contract_prestations" data-prototype="{{ form_widget(contractForm.prestations.vars.prototype)|e('html_attr') }}">
+    {{ form_row(contractForm.prestations) }}
+{#    <div id="contract_prestations" data-prototype="{{ form_widget(contractForm.prestations.vars.prototype)|e('html_attr') }}">#}
         {# Existing Prestations #}
 {#        {% for prestationForm in contractForm.prestations %}#}
 {#            {{ form_row(prestationForm.description) }}#}
 {#            {{ form_row(prestationForm.description) }}#}
 {#            {{ form_row(prestationForm.description) }}#}
-
 {#        {% endfor %}#}
-    </div>
+{#    </div>#}
     <button type="button" id="add-prestation-btn">Add Prestation</button>
-    <button type="submit">Enregistrer Contrat</button>
+    <button id="submit_button">Enregistrer Contrat</button>
     {{ form_end(contractForm) }}
-
-
     <script>
             // Get the container for Prestations
-            var prestationsContainer = document.getElementById('contract_prestations');
+            var prestationsContainer = document.getElementById('contract_form_prestations');
 
 
             // Add Prestation button click event
-            document.getElementById('add-prestation-btn').addEventListener('click',function(e) {
+            let add_button = document.getElementById('add-prestation-btn');
+            add_button.addEventListener('click',function(e) {
                 var prototype = prestationsContainer.getAttribute('data-prototype');
-                var index = prestationsContainer.children.length;
+                var index = prestationsContainer.children.length/2;
 
                 var newForm = prototype.replace(/__name__/g, index);
+                newForm = newForm.replace(/<label class="required">__prestation_name__label__<\/label>/g,'');
+
                 var tempDiv = document.createElement('div');
                 tempDiv.innerHTML = newForm;
-
+                // tempDiv.firstElementChild.classList.add('form-group');
+                tempDiv.firstElementChild.querySelectorAll('input, select').forEach((e)=>{
+                    e.classList.add('form-control');
+                })
+                let prestation_header = document.createElement("h2");
+                prestation_header.textContent = "prestation "+(index+1);
+                prestationsContainer.appendChild(prestation_header);
                 prestationsContainer.appendChild(tempDiv.firstChild);
 
                 e.preventDefault();
             });
+            document.getElementById("submit_button").addEventListener("click",()=>{
+                document.getElementsByName("contract_form").submit;
+            })
+            add_button.click();
     </script>
 {% endblock %}
