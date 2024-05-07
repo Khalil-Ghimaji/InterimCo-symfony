@@ -5,7 +5,7 @@
 
     {{ form_start(contractForm) }}
     {{ form_row(contractForm.libelle) }}
-    {{ form_row(contractForm.prestations) }}
+    {{ form_row(contractForm.prestations,{'label':false}) }}
     <button type="button" id="add-prestation-btn">Add Prestation</button>
     <button>Enregistrer Contrat</button>
     {{ form_end(contractForm) }}
@@ -16,7 +16,7 @@
             let add_button = document.getElementById('add-prestation-btn');
             add_button.addEventListener('click',function(e) {
                 var prototype = prestationsContainer.getAttribute('data-prototype');
-                var index = prestationsContainer.children.length/2;
+                var index = prestationsContainer.children.length;
 
                 var newForm = prototype.replace(/<label class="required">__prestation_name__label__<\/label>/g,'');
                 newForm = newForm.replace(/__prestation_name__/g, index);
@@ -27,10 +27,29 @@
                 tempDiv.firstElementChild.querySelectorAll('input, select').forEach((e)=>{
                     e.classList.add('form-control');
                 })
+                tempDiv.firstElementChild.querySelectorAll('label').forEach((lab)=>{
+                   lab.classList.add('form-label')
+                });
                 let prestation_header = document.createElement("h2");
-                prestation_header.textContent = "prestation "+(index+1);
-                prestationsContainer.appendChild(prestation_header);
-                prestationsContainer.appendChild(tempDiv.firstChild);
+                prestation_header.textContent = "Prestation ";
+
+                let delete_button = document.createElement("button");
+                delete_button.textContent = 'Supprimer';
+                delete_button.classList.add('btn-danger');
+                delete_button.classList.add('btn');
+                delete_button.type='button';
+                delete_button.addEventListener('click',(e)=>{
+                    e.target.parentElement.remove();
+                    if (prestationsContainer.children.length === 0){
+                        add_button.click();
+                    }
+                })
+
+                let prestation_div = document.createElement('div');
+                prestation_div.appendChild(prestation_header);
+                prestation_div.appendChild(tempDiv.firstChild.firstChild);
+                prestation_div.appendChild(delete_button);
+                prestationsContainer.appendChild(prestation_div);
 
                 e.preventDefault();
             });
