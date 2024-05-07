@@ -4,10 +4,15 @@
 namespace App\Controller;
 
 use App\Repository\CompetencesRepository;
+use App\Service\PdfService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ContratsRepository;
-use App\Entity\Contrats; // Importez la classe Contrat
+use App\Entity\Contrats;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+
+// Importez la classe Contrat
 
 class ContratController extends AbstractController
 {
@@ -28,8 +33,8 @@ class ContratController extends AbstractController
     #[Route('/traiter_contrat/{id}', name: 'traiter_contrat')]
     public function traiterContrat($id,ContratsRepository $contratsRepository,CompetencesRepository $competencesRepository)
     {
-        // Ajoutez ici la logique pour traiter le contrat avec l'ID donné
-        // Par exemple, récupérez le contrat à partir de son ID
+        // Ajoutez ici la logique pour traiter le contrat.html.twig avec l'ID donné
+        // Par exemple, récupérez le contrat.html.twig à partir de son ID
         $contrat = $contratsRepository->findById($id);
 
 
@@ -39,22 +44,64 @@ class ContratController extends AbstractController
 
         ]);
     }
-//    #[Route('/contrat/{id}', name: 'afficher_contrat')]
+//    #[Route('/contrat.html.twig/{id}', name: 'afficher_contrat')]
 //    public function afficherContrat($id, ContratsRepository $contratsRepository,CompetencesRepository $competencesRepository)
 //    {
-//        $contrat = $contratsRepository->findById($id);
+//        $contrat.html.twig = $contratsRepository->findById($id);
 //
-//        if (!$contrat) {
+//        if (!$contrat.html.twig) {
 //            throw $this->createNotFoundException('Contrat non trouvé pour l\'ID ' . $id);
 //        }
 //
-//        // Récupérer les prestations associées au contrat
-//        $prestations = $contrat->getPrestations();
+//        // Récupérer les prestations associées au contrat.html.twig
+//        $prestations = $contrat.html.twig->getPrestations();
 //
 //        return $this->render('afficher_contrat.html.twig', [
-//            'contrat' => $contrat,
+//            'contrat.html.twig' => $contrat.html.twig,
 //            'prestations' => $prestations,
 //        ]);
 //    }
 
+//    #[Route('/contrat/pdf/{id}', name: 'contrat_pdf')]
+//    public function contratToPdf($id, ContratsRepository $contratsRepository, PdfService $pdfService)
+//    {
+//        // Récupérer le contrat depuis l'ID
+//        $contrat = $contratsRepository->find($id);
+//
+//        // Vérifier si le contrat existe
+//        if (!$contrat) {
+//            throw $this->createNotFoundException('Contrat non trouvé pour l\'ID ' . $id);
+//        }
+//
+//        // Générer le contenu HTML du contrat (vous devrez créer le template Twig correspondant)
+//        $htmlContent = $this->renderView('contrat.html.twig', [
+//            'contrat' => $contrat,
+//        ]);
+//
+//        // Générer le PDF à partir du contenu HTML
+//        $pdfContent = $pdfService->generateBinaryPDF($htmlContent);
+//
+//        // Créer une réponse avec le contenu PDF
+//        $response = new Response($pdfContent);
+//
+//        // Définir les en-têtes pour indiquer au navigateur que le fichier est un PDF à télécharger
+//        $response->headers->set('Content-Type', 'application/pdf');
+//        $response->headers->set('Content-Disposition', 'attachment; filename="contrat.pdf"');
+//
+//        return $response;
+//    }
+    #[Route('/contrat/pdf/{id}', name: 'contrat_pdf')]
+    public function generatePdfPersonne($id,PdfService $pdf,ContratsRepository $contratsRepository): Response
+    {
+                $contrat = $contratsRepository->find($id);
+
+        // Rendu de la vue Twig et récupération du contenu HTML
+        $html = $this->renderView('contrat.html.twig', ['contrat' => $contrat]);
+
+        // Génération du PDF à partir du contenu HTML
+        $pdf->showPdfFile($html);
+
+        // Retourner une réponse vide, car showPdfFile() affiche directement le PDF
+        return new Response();
+    }
 }

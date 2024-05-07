@@ -120,6 +120,10 @@ class Contrats
     {
         $this->etat_contrat = $etat_contrat;
 
+
+
+
+        
         return $this;
     }
 

@@ -61,6 +61,15 @@
             </table>
         {% endif %}
     </div>
+    <div>
+        <!-- traiter_contrat.html.twig -->
+
+        <!-- Ajoutez ceci où vous souhaitez afficher le bouton PDF -->
+        <form action="{{ path('contrat_pdf', {'id': contrat.id}) }}" method="get">
+            <button type="submit" class="btn btn-success">Voir Aperçu PDF</button>
+        </form>
+
+    </div>
 {% endblock %}
 {% block javascripts %}
 

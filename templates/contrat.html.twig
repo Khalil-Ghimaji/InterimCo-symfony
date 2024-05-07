@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Contrat de Prestation de Service</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .contract-details {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .signature {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .signature input[type="text"] {
+            font-size: 16px;
+            height: 40px;
+            width: 45%; /* La largeur de chaque champ de signature */
+        }
+        .signature label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>Contrat de Prestation de Service</h1>
+</div>
+
+<div class="contract-details">
+    <h2>Détails du Contrat</h2>
+    <table>
+
+        <tr>
+            <th>Libellé</th>
+            <td>{{ contrat.libelle }}</td>
+        </tr>
+        <tr>
+            <th>Date de Soumission</th>
+            <td>{{ contrat.dateSoumission|date('Y-m-d') }}</td>
+        </tr>
+        <tr>
+            <th>Date de Réponse</th>
+            <td>{{ contrat.dateReponse|date('Y-m-d') }}</td>
+        </tr>
+
+        <tr>
+            <th>Prix Final</th>
+            <td>{{ contrat.prixFinal }}</td>
+        </tr>
+    </table>
+</div>
+
+<!-- Employés affectés -->
+<div class="employees">
+    <h2>Employés Affectés</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Numéro de Téléphone</th>
+            <th>Prestation</th>
+            <th>Date du debut de la prestation</th>
+            <th>Date de la fin de la prestation</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for prestation in contrat.prestations %}
+            {% for employe in prestation.employe %}
+                <tr>
+                    <td>{{ employe.nom }}</td>
+                    <td>{{ employe.prenom }}</td>
+                    <td>{{ employe.numeroTelephone }}</td>
+                    <td>{{ prestation.description }}</td>
+                    <td>{{ prestation.dateDebut|date('Y-m-d')  }}</td>
+                    <td>{{ prestation.dateFin|date('Y-m-d') }}</td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="signature">
+    <div>
+        <label for="client_signature">Signature du Client :</label>
+        <input type="text" id="client_signature" name="client_signature">
+    </div>
+    <div>
+        <label for="company_rep_signature">Signature du Représentant de la Société :</label>
+        <input type="text" id="company_rep_signature" name="company_rep_signature">
+    </div>
+</div>
+
+
+
+</body>
+</html>
