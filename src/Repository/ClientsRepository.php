@@ -15,7 +15,32 @@ class ClientsRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Clients::class);
     }
+    public function findByFilters(Clients $filters): ?array
+    {
+//        $queryBuilder = $this->createQueryBuilder('cli');
+//
+//        foreach ($filters as $field => $value) {
+//            if ($value !== null || $value !== '') {
+//                $queryBuilder->andWhere("cli.$field = :$field")
+//                    ->setParameter($field, $value);
+//            }
+//        }
+        $queryBuilder = $this->createQueryBuilder('cli');
+        $entityManager = $this->getEntityManager();
+        $metadata = $entityManager->getClassMetadata(Clients::class);
+        $properties = $metadata->getFieldNames();
+        foreach ($properties as $property) {
+            $getter = 'get' . ucfirst($property);
+            $value = $filters->$getter();
+            if ($value !== null && $value !== '') {
+                $queryBuilder->andWhere("cli.$property = :$property")
+                    ->setParameter($property, $value);
+            }
+        }
 
+        // Execute the query and return the result
+        return $queryBuilder->getQuery()->getResult();
+    }
     //    /**
     //     * @return Clients[] Returns an array of Clients objects
     //     */
