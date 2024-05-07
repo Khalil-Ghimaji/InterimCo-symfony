@@ -30,7 +30,7 @@
                         {% else %}
                             {% for notification in notifications %}
                                 <li>
-                                    <a style="min-width: 285px" class="dropdown-item" href="{{ '/contrat?id=' ~ notification.id_contrat }}">
+                                    <a style="min-width: 285px" class="dropdown-item" href="{{ path('contract_details',{id:notification.contrat.id}) }}">
                                         <div style="white-space: normal;">
                                             <p>
                                                 {{ notification.message }}<br>

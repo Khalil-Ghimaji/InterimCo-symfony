@@ -40,28 +40,43 @@
             </thead>
             <tbody>
             {% for contrat in contrats %}
-                <tr class="{% if contrat.etatContrat == 'En attente de validation' %}table-warning{% elseif contrat.etatContrat == 'Accepté' %}table-success{% elseif contrat.etatContrat == 'Refusé' %}table-danger{% else %}table-green{% endif %}">
+                <tr>
                     <td>{{ contrat.libelle }}</td>
-                    <td>{{ contrat.dateSoumission }}</td>
-                    <td>{{ contrat.dateReponse }}</td>
+                    <td>{{ contrat.dateSoumission? contrat.dateSoumission.format('Y-m-d') :null }}</td>
+                    <td>{{ contrat.dateReponse? contrat.dateReponse.format('Y-m-d'): null }}</td>
                     <td>{{ contrat.prix }}</td>
                     <td>{{ contrat.etatContrat }}</td>
                     <td>
                         <div class="container text-center">
                             <div class="row">
-                                <a class="btn btn-info col mx-1" href="{{ path('contract_details', {'id': contrat.id}) }}">Details</a>
-{#                                    {% if contrat.etatContrat == 'En attente de validation' %}#}
-{#                                    <form class="col" action="{{ path('validation_contrat') }}" method="POST">#}
-{#                                        <input type="hidden" name="contrat_id" value="{{ contrat.id }}">#}
-{#                                        <button class="btn btn-success" style="width: 100%" type="submit">Valider</button>#}
-{#                                    </form>#}
-{#                                {% elseif contrat.etatContrat == 'Accepté' %}#}
-{#                                    <form class="col" action="{{ path('finalisation_contrat') }}" method="POST">#}
-{#                                        <input type="hidden" name="contrat_id" value="{{ contrat.id }}">#}
-{#                                        <button class="btn btn-success" style="width: 100%" type="submit">Finaliser</button>#}
-{#                                    </form>#}
-{#                                {% endif %}#}
-                               <a class="btn btn-danger col mx-1" href="{{ path('delete_contract',{'id':contrat.id}) }}">Supprimer</a>
+                                {% if contrat.etatContrat == 'En attente de validation' %}
+                                    <a class="btn btn-info col" href="{{ path('contract_details', {'id': contrat.id}) }}">
+                                        Details/Modif
+                                    </a>
+                                {% else %}
+                                    <a class="btn btn-info col" href="{{ path('contract_details', {'id': contrat.id}) }}">
+                                        Details
+                                    </a>
+                                {% endif %}
+
+                                {% if contrat.etatContrat == 'En attente de validation' %}
+                                    <form class="col" method="POST">
+                                        <input type="hidden" name="formAction" value="validate">
+                                        <input type="hidden" name="contrat_id" value="{{ contrat.id }}">
+                                        <button class="btn btn-success" style="width: 100%" type="submit">Valider</button>
+                                    </form>
+                                {% elseif contrat.etatContrat == 'Accepté' %}
+                                    <form class="col" method="POST">
+                                        <input type="hidden" name="formAction" value="finalize">
+                                        <input type="hidden" name="contrat_id" value="{{ contrat.id }}">
+                                        <button class="btn btn-success" style="width: 100%" type="submit">Finaliser</button>
+                                    </form>
+                                {% endif %}
+                                <form class="col" method="POST">
+                                    <input type="hidden" name="formAction" value="delete">
+                                    <input type="hidden" name="contrat_id" value="{{ contrat.id }}">
+                                    <button class="btn btn-danger" style="width: 100%" type="submit">supprimer</button>
+                                </form>
                             </div>
                         </div>
                     </td>
@@ -70,4 +85,27 @@
             </tbody>
         </table>
     {% endif %}
+
+<script>
+    contract_rows=document.querySelectorAll('tr');
+    Array.from(contract_rows).slice(1).forEach(contract_row=>{
+        const status = contract_row.querySelectorAll('td')[4].textContent;
+        if(status === 'En attente de validation'){
+            contract_row.classList.add('table-warning');
+        }
+        else if(status === 'En cours de traitement') {
+            contract_row.classList.add('table-secondary');
+        }
+        else if(status === 'Accepté'){
+            contract_row.classList.add('table-success');
+        }
+        else if(status === 'Refusé'){
+            contract_row.classList.add('table-danger');
+        }
+        else{
+            contract_row.classList.add('table-green');
+        }
+
+    })
+</script>
 {% endblock %}

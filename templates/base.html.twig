@@ -34,10 +34,13 @@
         {% endblock %}
         {% block body %}{% endblock %}
         <script>
-
             let input_items = document.querySelectorAll('input');
             input_items.forEach((input_item)=>{
-                input_item.classList.add('form-control');
+                if (input_item.type === 'checkbox') {
+                    input_item.classList.add('form-check-input')
+                }else{
+                    input_item.classList.add('form-control');
+                }
             })
             selects = document.querySelectorAll('select');
             selects.forEach((select_item)=>{

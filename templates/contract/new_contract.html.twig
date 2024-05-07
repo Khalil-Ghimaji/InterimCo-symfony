@@ -12,16 +12,14 @@
     <script>
             // Get the container for Prestations
             var prestationsContainer = document.getElementById('contract_form_prestations');
-
-
             // Add Prestation button click event
             let add_button = document.getElementById('add-prestation-btn');
             add_button.addEventListener('click',function(e) {
                 var prototype = prestationsContainer.getAttribute('data-prototype');
                 var index = prestationsContainer.children.length/2;
 
-                var newForm = prototype.replace(/__name__/g, index);
-                newForm = newForm.replace(/<label class="required">__prestation_name__label__<\/label>/g,'');
+                var newForm = prototype.replace(/<label class="required">__prestation_name__label__<\/label>/g,'');
+                newForm = newForm.replace(/__prestation_name__/g, index);
 
                 var tempDiv = document.createElement('div');
                 tempDiv.innerHTML = newForm;

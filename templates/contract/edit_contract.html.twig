@@ -4,20 +4,15 @@
 
 {% block body %}
     <h1>Details Contrat</h1>
-    {% set form_data = {
-        'libelle': existingContract.libelle,
-        'prestations': existingContract.prestations
-    } %}
 
     {{ form_errors(contractForm) }}
 
-    {{ form_start(contractForm, {'data': form_data}) }}
+    {{ form_start(contractForm) }}
         {{ form_row(contractForm.libelle) }}
-{#        {{ form_row(contractForm.prestations) }}#}
     <div id="contract_form_prestations" data-prototype="{{ form_widget(contractForm.prestations.vars.prototype)|e('html_attr') }}">
         {% for prestation in existingContract.prestations %}
             <h2>prestation {{ loop.index }}</h2>
-            {{ form_row(contractForm.prestations[loop.index-1]) }}
+            {{ form_row(contractForm.prestations[loop.index-1],{'label' : false}) }}
         {% endfor %}
         </div>
 
