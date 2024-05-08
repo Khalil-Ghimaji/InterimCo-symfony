@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TarifController!{% endblock %}
+
+{% block body %}
+<h1>Tarifs</h1>
+{% if competences|length == 0 %}
+<h2>Il n'y a aucune competence !</h2>
+{% else %}
+<table class="table table-hover table-bordered">
+    <thead>
+    <tr>
+        <th>Competence</th>
+        <th>Niveau De Competence</th>
+        <th>Prix</th>
+    </tr>
+    <tbody>
+    {% for competence in competences %}
+    <tr>
+        <td>{{ competence.competence }}</td>
+        <td>{{ competence.niveauCompetence }}</td>
+        <td>{{ competence.prixEstime }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}
