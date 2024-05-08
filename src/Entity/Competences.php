@@ -24,7 +24,7 @@ class Competences
     #[ORM\Column]
     private ?float $prixEstime = null;
 
-    #[ORM\ManyToMany(targetEntity: employes::class, inversedBy: 'competences')]
+    #[ORM\ManyToMany(targetEntity: Employes::class, inversedBy: 'competences')]
     private Collection $employes;
 
     #[ORM\OneToMany(targetEntity: Prestations::class, mappedBy: 'competence')]

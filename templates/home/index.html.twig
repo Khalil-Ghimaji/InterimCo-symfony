@@ -34,7 +34,7 @@
 {% endblock %}
 {% block header %}
     {% if authenticatedUser %}
-        {% include 'headers/authenticated_header.html.twig' with {'notifications':[]} %}
+        {% include 'headers/authenticated_header.html.twig' %}
     {% else %}
         {% include 'headers/public_header.html.twig' %}
     {% endif %}

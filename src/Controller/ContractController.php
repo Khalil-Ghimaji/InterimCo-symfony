@@ -9,18 +9,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function Webmozart\Assert\Tests\StaticAnalysis\length;
 
 
 #[Route('/contract'), ]
 
-class ContractController extends AbstractController
+class ContractController extends BaseController
 {
     private $contractRepo;
     private $manager;
     public function __construct(private ManagerRegistry $doctrine)
     {
-        $this->contractRepo=$doctrine->getRepository(Contrats::class);
+        $this->contractRepo=$this->doctrine->getRepository(Contrats::class);
         $this->manager = $this->doctrine->getManager();
     }
     #[Route('/', name: 'app_contract')]
@@ -40,6 +39,7 @@ class ContractController extends AbstractController
         $contrats = $this->contractRepo->findBy(['client' => $this->getUser()]);
         return $this->render('contract/index.html.twig', [
             'contrats'=>$contrats,
+            'notifications'=>parent::getAllNotifications($this->doctrine)
         ]);
     }
     #[Route('/new',name:'ajout_contrat')]
@@ -69,6 +69,7 @@ class ContractController extends AbstractController
 
         return $this->render('contract/new_contract.html.twig', [
             'contractForm' => $form_contrat->createView(),
+            'notifications'=> parent::getAllNotifications($this->doctrine)
         ]);
     }
     #[Route('/details/{id}',name:'contract_details')]
@@ -77,7 +78,6 @@ class ContractController extends AbstractController
         $contract = $this->contractRepo->find($id);
         if ($contract->getEtatContrat()=="En attente de validation") {//le contrat n'est pas envoye. Il peut toujouts etre modifie
             $form = $this->createForm(ContractFormType::class, $contract);
-
             // Handle form submission
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
@@ -99,11 +99,11 @@ class ContractController extends AbstractController
                 // Redirect to a success page or return a response
                 return $this->redirectToRoute('app_contract');
             }
-
             // Render the form for editing
             return $this->render('contract/edit_contract.html.twig', [
                 'contractForm' => $form->createView(),
                 'existingContract' => $contract,
+                'notifications'=> parent::getAllNotifications($this->doctrine)
             ]);
         } elseif ($contract->getEtatContrat() == 'En cours de traitement'){ //le contrat a ete envoye mais n'a pas ete encore traite
             $form = $this->createForm(ContractFormType::class, $contract);
@@ -118,10 +118,12 @@ class ContractController extends AbstractController
             return $this->render('contract/sent_contract.html.twig', [
                 'contractForm' => $formView,
                 'existingContract' => $contract,
+                'notifications'=> parent::getAllNotifications($this->doctrine)
             ]);
         } else{//le contrat a ete traite
             return $this->render('contract/treated_contract.html.twig', [
                 'existingContract' => $contract,
+                'notifications'=> parent::getAllNotifications($this->doctrine)
             ]);
         }
     }

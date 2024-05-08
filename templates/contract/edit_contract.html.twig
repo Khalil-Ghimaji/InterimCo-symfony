@@ -26,11 +26,10 @@
         var prestationsContainer = document.getElementById('contract_form_prestations');
 
         function handleDeletion(delBtn){
-            delBtn.parentElement.remove();
-            if (prestationsContainer.children.length === 0){
-                add_button.click();
-            }
+            let prestDiv = delBtn.parentElement;
+            prestDiv.remove();
         }
+
 
         let add_button = document.getElementById('add-prestation-btn');
         add_button.addEventListener('click',function(e) {
