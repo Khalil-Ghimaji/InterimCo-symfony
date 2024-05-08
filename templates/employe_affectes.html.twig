@@ -1,11 +1,11 @@
 </div>
 <div class="container">
-    {% if employes_adequats is empty %}
+    {% if prestation.employe is empty %}
         <div class="alert alert-info" role="alert">
-            Aucun employé adequat a cette prestation.
+            Aucun employé affecte a cette prestation.
         </div>
     {% else %}
-        <h2 class="text-center">Employés Adéquats à la Prestation:</h2>
+        <h2 class="text-center">Employés Affectés à la Prestation:</h2>
         <table class="table table-striped">
             <thead class="thead-dark">
             <tr>
@@ -14,12 +14,12 @@
                 <th scope="col">Numéro de Téléphone</th>
                 <th scope="col">Compétences</th>
                 {%if prestation.contrat.etatContrat == 'en_cours_de_traitement' %}
-                    <th scope="col">Action</th>
+                <th scope="col">Action</th>
                 {% endif %}
             </tr>
             </thead>
             <tbody>
-            {% for employe in employes_adequats %}
+            {% for employe in prestation.employe %}
                 <tr>
                     <td>{{ employe.nom }}</td>
                     <td>{{ employe.prenom }}</td>
@@ -34,8 +34,8 @@
 
                     {%if prestation.contrat.etatContrat == 'en_cours_de_traitement' %}
                         <td>
-                            <form action="{{path('ajouter_employe', { 'id': employe.id, 'id_prestation': prestation.id }) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir ajouter cet employé a la prestation ?');">
-                                <button type="submit" class="btn btn-success">Ajouter</button>
+                            <form action="{{path('supprimer_employe', { 'id': employe.id, 'id_prestation': prestation.id }) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet employé de la prestation ?');">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
                             </form
                         </td>
                     {% endif %}

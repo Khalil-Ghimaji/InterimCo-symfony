@@ -18,7 +18,6 @@
             <div class="alert alert-info" role="alert">
                 Aucune prestation trouvée pour ce contrat.
             </div>
-            {{ contrat.prestations }}
         {% else %}
             <h2 class="text-center">Prestations:</h2>
             <table class="table table-striped">
@@ -61,16 +60,34 @@
             </table>
         {% endif %}
     </div>
-    <div>
-        <!-- traiter_contrat.html.twig -->
 
-        <!-- Ajoutez ceci où vous souhaitez afficher le bouton PDF -->
-        <form action="{{ path('contrat_pdf', {'id': contrat.id}) }}" method="get">
-            <button type="submit" class="btn btn-success">Voir Aperçu PDF</button>
-        </form>
-
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col text-left">
+                <form action="{{ path('contrat_pdf', {'id': contrat.id}) }}" method="get">
+                    <button type="submit" class="btn btn-lg btn-success">Voir Aperçu PDF</button>
+                </form>
+            </div>
+            <div class="col text-right">
+                <div class="text-center">
+                    <button id="boutonConfirmer" class="btn btn-lg btn-primary">Confirmer les données du contrat</button>
+                </div>
+                <div class="row mt-3" id="conteneurFormulaires" style="display: none;">
+                    <div class="col text-center">
+                        <a href="{{ path('succes_contrat', {'id': contrat.id}) }}" class="btn btn-success mr-2">Notifier Client de Succès</a>
+                        <a href="{{ path('echec_contrat', {'id': contrat.id}) }}" class="btn btn-danger">Notifier Client d'Échec</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
-{% block javascripts %}
 
+{% block javascripts %}
+    <script>
+        document.getElementById("boutonConfirmer").onclick = function () {
+            var conteneurFormulaires = document.getElementById("conteneurFormulaires");
+            conteneurFormulaires.style.display = "block";
+        };
+    </script>
 {% endblock %}

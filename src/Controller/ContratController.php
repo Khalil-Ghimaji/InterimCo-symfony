@@ -93,7 +93,7 @@ class ContratController extends AbstractController
     #[Route('/contrat/pdf/{id}', name: 'contrat_pdf')]
     public function generatePdfPersonne($id,PdfService $pdf,ContratsRepository $contratsRepository): Response
     {
-                $contrat = $contratsRepository->find($id);
+        $contrat = $contratsRepository->find($id);
 
         // Rendu de la vue Twig et récupération du contenu HTML
         $html = $this->renderView('contrat.html.twig', ['contrat' => $contrat]);
@@ -104,4 +104,20 @@ class ContratController extends AbstractController
         // Retourner une réponse vide, car showPdfFile() affiche directement le PDF
         return new Response();
     }
+    #[Route('/contrat_succes/{id}', name: 'succes_contrat')]
+    public function succees_contrat($id){
+
+    }
+    #[Route('/contrat_echec/{id}', name: 'echec_contrat')]
+    public function echec_contrat($id){
+
+    }
 }
+
+
+
+
+
+
+
+

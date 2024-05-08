@@ -16,28 +16,43 @@ class PrestationsRepository extends ServiceEntityRepository
         parent::__construct($registry, Prestations::class);
     }
 
-    //    /**
-    //     * @return Prestations[] Returns an array of Prestations objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findBYEmployesAdequats(int $id_prestation): array
+    {
 
-    //    public function findOneBySomeField($value): ?Prestations
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        $prestation = $this->find($id_prestation);
+        $competenceId = $prestation->getCompetence()->getId();
+
+        $qb = $this->createQueryBuilder('p');
+
+        $qb->select('e')
+            ->from('App\Entity\Employes', 'e')
+            ->join('e.competences', 'c')
+            ->leftJoin('p.employe', 'ep')
+            ->where('c.id = :competenceId')
+            ->andWhere($qb->expr()->notIn(
+                'e.id',
+                $qb->select('ep2.id')
+                    ->from('App\Entity\Employes', 'e2')
+                    ->join('e2.prestations', 'p2')
+                    ->where($qb->expr()->andX(
+                        $qb->expr()->orX(
+                            $qb->expr()->andX(
+                                $qb->expr()->gte('p2.date_debut', ':date_debut'),
+                                $qb->expr()->lt('p2.date_debut', ':date_fin')
+                            ),
+                            $qb->expr()->andX(
+                                $qb->expr()->gt('p2.date_fin', ':date_debut'),
+                                $qb->expr()->lte('p2.date_fin', ':date_fin')
+                            )
+                        ),
+                        $qb->expr()->eq('p2.id', ':id_prestation')
+                    ))
+            ))
+            ->setParameter('competenceId', $competenceId)
+            ->setParameter('date_debut', $prestation->getDateDebut())
+            ->setParameter('date_fin', $prestation->getDateFin())
+            ->setParameter('id_prestation', $id_prestation);
+
+        return $qb->getQuery()->getResult();
+    }
 }
