@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/contrats')]
+#[Route('/contrats'),isGranted('ROLE_USER')]
 class ContratController extends AbstractController
 {
     #[Route('/', name: 'app_contract')]

@@ -14,6 +14,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/competences'),isGranted('ROLE_USER')]
 class CompetenceController extends AbstractController
 {
+    private ManagerRegistry $managerRegistry;
+
+    public function __construct(ManagerRegistry $managerRegistry)
+    {
+        $this->managerRegistry = $managerRegistry;
+    }
     #[Route('/', name: 'app_competence')]
     public function index(ManagerRegistry $doctrine,Request $request): Response
     {
@@ -44,5 +50,23 @@ class CompetenceController extends AbstractController
             'competences' => $competences,
             'filter' => $competenceFilterForm->createView(),
         ]);
+    }
+
+    #[Route('/updatePrix', name: 'update_prix')]
+    public function updatePrix(Request $request): Response
+    {
+        $id=$request->get('id');
+        $new_prix=$request->get('new_prix');
+        $entityManager = $this->managerRegistry->getManager();
+        $competence = $entityManager->getRepository(Competences::class)->find($id);
+
+        if (!$competence) {
+            throw $this->createNotFoundException('Competence not found');
+        }
+
+        $competence->setPrixEstime($new_prix);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_competence');
     }
 }

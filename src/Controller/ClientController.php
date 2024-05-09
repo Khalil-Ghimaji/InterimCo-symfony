@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/clients')]
+#[Route('/clients'),isGranted('ROLE_USER')]
 class ClientController extends AbstractController
 {
     #[Route('/', name: 'app_client')]

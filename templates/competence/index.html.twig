@@ -40,7 +40,14 @@
                 <tr>
                     <td>{{ competence.competence }}</td>
                     <td>{{ competence.niveauCompetence}}</td>
-                    <td>{{ competence.prixEstime }}</td>
+                    <td>
+                        <form method="get" action="{{ path('update_prix') }}" >
+                            <input type="hidden" name="id" value="{{ competence.id }}">
+                            <input type="number" class="form-control" name="new_prix" value="{{ competence.prixEstime }}">
+                            <button type="submit" class="btn btn-primary">Mettre à jour</button>
+                        </form>
+                    </td>
+
                 </tr>
             {% else %}
                 <td colspan="6"><h3>Pas de competences dans la bd</h3></td>
