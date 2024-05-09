@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/competences')]
+#[Route('/competences'),isGranted('ROLE_USER')]
 class CompetenceController extends AbstractController
 {
     #[Route('/', name: 'app_competence')]

@@ -4,6 +4,21 @@
 
 {% block body %}
     <div class="container mt-5">
+        {% for message in app.session.flashBag.get('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.session.flashBag.get('info') %}
+            <div class="alert alert-info">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.session.flashBag.get('error') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
         <h2 class="text-center">Gestion des Employes </h2>
         <div class="mb-3">
             {{ form_start(filter,{'attr':{'class':'form-horizontal'}}) }}
@@ -33,7 +48,10 @@
         </div>
     </div>
     <div class="container mt-5">
-        <h4>Liste des Employes</h4>
+        <div class="d-flex justify-content-between">
+            <h4>Liste des employés</h4>
+            <a href="{{ path('app_employe_new') }}" class="btn btn-success">Ajouter</a>
+        </div>
         <table class="table mt-3">
             <thead>
             <tr>
@@ -42,6 +60,7 @@
                 <th>Prenom</th>
                 <th>Email</th>
                 <th>Numero de téléphone</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -52,6 +71,7 @@
                     <td>{{ employe.prenom }}</td>
                     <td>{{ employe.email}}</td>
                     <td>{{ employe.numeroTelephone }}</td>
+                    <td><a href="{{ path('app_employe_delete', {id:  employe.id} ) }}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer l\'employé {{ employe.nom}} {{ employe.prenom}} ?')">Supprimer</a>
                 </tr>
             {% else %}
                 <td colspan="6"><h3>Pas de employes dans la bd</h3></td>

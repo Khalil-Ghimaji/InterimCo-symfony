@@ -9,13 +9,28 @@ use App\Form\EmployeFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/employes')]
+#[Route('/employes'),isGranted('ROLE_USER')]
 class EmployeController extends AbstractController
 {
+    #[Route('/delete/{id}', name: 'app_employe_delete')]
+    public function delete(Employes $employe = null, ManagerRegistry $doctrine):RedirectResponse{
+        if($employe){
+            $manager = $doctrine->getManager();
+            $manager->remove($employe);
+            $manager->flush();
+            $this->addFlash('success','L\'employé a été supprimé avec succès');
+        }
+        else{
+            $this->addFlash('error','Employé inexistant');
+        }
+        return $this->redirectToRoute('app_employe');
+    }
     #[Route('/', name: 'app_employe')]
     public function index(ManagerRegistry $doctrine,Request $request): Response
     {
