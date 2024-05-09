@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Agents DRH{% endblock %}
+{% block title %}Liste des employés{% endblock %}
 
 {% block body %}
     <div class="container mt-5">
-            <h2 class="text-center">Gestion des Agents DRH </h2>
+        <h2 class="text-center">Gestion des Employes </h2>
         <div class="mb-3">
             {{ form_start(filter,{'attr':{'class':'form-horizontal'}}) }}
             <div class="form-group row">
                 <div class="col">
-                    {{ form_row(filter.username) }}
+                    {{ form_row(filter.competences) }}
                 </div>
                 <div class="col">
                     {{ form_row(filter.numeroTelephone) }}
@@ -33,15 +33,11 @@
         </div>
     </div>
     <div class="container mt-5">
-        <div class="d-flex justify-content-between">
-            <h4>Liste des Agents DRH</h4>
-            <a href="/agentdrh/new" class="btn btn-success">Ajouter</a>
-        </div>
+        <h4>Liste des Employes</h4>
         <table class="table mt-3">
             <thead>
             <tr>
                 <th>Id</th>
-                <th>Nom d'utilisateur</th>
                 <th>Nom</th>
                 <th>Prenom</th>
                 <th>Email</th>
@@ -49,17 +45,16 @@
             </tr>
             </thead>
             <tbody>
-            {% for agent in agents %}
+            {% for employe in employes %}
                 <tr>
-                    <td>{{ agent.id }}</td>
-                    <td>{{ agent.username }}</td>
-                    <td>{{ agent.nom }}</td>
-                    <td>{{ agent.prenom }}</td>
-                    <td>{{ agent.email}}</td>
-                    <td>{{ agent.numeroTelephone }}</td>
+                    <td>{{ employe.id }}</td>
+                    <td>{{ employe.nom }}</td>
+                    <td>{{ employe.prenom }}</td>
+                    <td>{{ employe.email}}</td>
+                    <td>{{ employe.numeroTelephone }}</td>
                 </tr>
             {% else %}
-                <td colspan="6"><h3>Pas d'agentsDRH dans la bd</h3></td>
+                <td colspan="6"><h3>Pas de employes dans la bd</h3></td>
             {% endfor %}
             </tbody>
         </table>

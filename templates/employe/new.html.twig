@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Employé{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Nouveau Employé</h1>
+
+        {{ form_errors(form) }}
+
+        {{ form_start(form) }}
+        {{ form_row(form.nom) }}
+        {{ form_row(form.prenom) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.dateInscription) }}
+        {{ form_row(form.adresse) }}
+        {{ form_row(form.numeroTelephone) }}
+        <h3>Competences</h3>
+        <div id="competences">
+            {{ form_errors(form.competences) }}
+            {{ form_label(form.competences) }}
+            <div class="competences-container">
+                {% for competenceForm in form.competences %}
+                    <div class="competence-row">
+                        {{ form_row(competenceForm) }}
+                    </div>
+                {% endfor %}
+            </div>
+            <button type="button" id="add_competence">Add Competence</button>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Ajouter Employé">
+        {{ form_end(form) }}
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const competencesContainer = document.querySelector('#competences');
+            const addCompetenceButton = document.querySelector('#add_competence');
+
+            addCompetenceButton.addEventListener('click', function() {
+                const competenceRow = document.createElement('div');
+                competenceRow.classList.add('competence-row');
+
+                competenceRow.innerHTML = `
+                <div class="form-group">
+                    <label for="competence">Competence:</label>
+                    <input type="text" class="form-control" name="competence[]" required>
+                </div>
+                <div class="form-group">
+                    <label for="niveau">Niveau de Competence:</label>
+                    <select class="form-control" name="niveau[]" required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-danger remove-competence">Remove</button>
+            `;
+
+                competencesContainer.appendChild(competenceRow);
+            });
+
+            competencesContainer.addEventListener('click', function(event) {
+                if (event.target.classList.contains('remove-competence')) {
+                    event.target.closest('.competence-row').remove();
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

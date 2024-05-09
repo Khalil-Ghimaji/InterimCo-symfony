@@ -38,7 +38,7 @@ class ClientController extends AbstractController
                     ->setParameter('locale', $formData->getLocale());
             }
             if ($formData->getNumeroTelephone()){
-                $qb->andWhere('c.numeroTelephone LIKE :numeroTelephone')
+                $qb->andWhere('c.numeroTelephone = :numeroTelephone')
                     ->setParameter('numeroTelephone', $formData->getNumeroTelephone());
             }
 

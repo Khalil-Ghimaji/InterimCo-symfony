@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CompetenceController!{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h2 class="text-center">Gestion des Competences </h2>
+        <div class="mb-3">
+            {{ form_start(filter,{'attr':{'class':'form-horizontal'}}) }}
+            <div class="form-group row">
+                <div class="col">
+                    {{ form_row(filter.competence) }}
+                </div>
+                <div class="col">
+                    {{ form_row(filter.niveauCompetence) }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3"></div>
+                <div class="col">
+                    {{ form_row(filter.prixEstime) }}
+                </div>
+                <div class="col-3"></div>
+            </div>
+            {{ form_rest(filter) }}
+        </div>
+    </div>
+    <div class="container mt-5">
+        <h4>Liste des Competences</h4>
+        <table class="table mt-3">
+            <thead>
+            <tr>
+                <th>Competence</th>
+                <th>Niveau de competence</th>
+                <th>Prix estimé(/jour)</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for competence in competences %}
+                <tr>
+                    <td>{{ competence.competence }}</td>
+                    <td>{{ competence.niveauCompetence}}</td>
+                    <td>{{ competence.prixEstime }}</td>
+                </tr>
+            {% else %}
+                <td colspan="6"><h3>Pas de competences dans la bd</h3></td>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

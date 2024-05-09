@@ -42,7 +42,7 @@ class Prestations
 
     #[ORM\ManyToOne(inversedBy: 'prestations')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?contrats $contrat = null;
+    private ?Contrats $contrat = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -160,12 +160,12 @@ class Prestations
         return $this;
     }
 
-    public function getContrat(): ?contrats
+    public function getContrat(): ?Contrats
     {
         return $this->contrat;
     }
 
-    public function setContrat(?contrats $contrat): static
+    public function setContrat(?Contrats $contrat): static
     {
         $this->contrat = $contrat;
 
