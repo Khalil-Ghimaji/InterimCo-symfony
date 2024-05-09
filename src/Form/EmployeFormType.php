@@ -7,6 +7,7 @@ use App\Entity\Employes;
 use App\Entity\Prestations;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,16 +24,23 @@ class EmployeFormType extends AbstractType
             ])
             ->add('adresse')
             ->add('numeroTelephone')
-
-            ->add('competences', EntityType::class, [
-                'class' => Competences::class,
-                'choice_label' => function ($competence) {
-                    return $competence->getCompetence() . ' (' . $competence->getNiveauCompetence() . ')';
-                },
-                'multiple' => true,
-                'expanded' => true,
-                'allow_extra_fields' => true,
-            ])
+            ->add('competences', CollectionType::class, [
+                'entry_type' => CompetenceFilterType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'prototype' => true,
+                'prototype_name' => '__prestation_name__',
+            ]);
+//            ->add('competences', EntityType::class, [
+//                'class' => Competences::class,
+//                'choice_label' => function ($competence) {
+//                    return $competence->getCompetence() . ' (' . $competence->getNiveauCompetence() . ')';
+//                },
+//                'multiple' => true,
+//                'expanded' => true,
+//                'allow_extra_fields' => true,
+//            ])
         ;
     }
 

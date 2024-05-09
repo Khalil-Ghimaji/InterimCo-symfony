@@ -8,17 +8,32 @@ use App\Form\AgentDrhFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 
-#[Route('/agentdrh')]
+#[Route('/agentdrh'),isGranted('ROLE_USER')]
 class AgentDrhController extends AbstractController
 {
+    #[Route('/delete/{id}', name: 'app_agent_drh_delete')]
+    public function delete(AgentsDrh $agent = null, ManagerRegistry $doctrine):RedirectResponse{
+        if($agent){
+            $manager = $doctrine->getManager();
+            $manager->remove($agent);
+            $manager->flush();
+            $this->addFlash('success','L\'agent DRH a été supprimé avec succès');
+        }
+        else{
+            $this->addFlash('error','Agent DRH inexistant');
+        }
+        return $this->redirectToRoute('app_agent_drh');
+    }
     #[Route('/', name: 'app_agent_drh')]
     public function index(ManagerRegistry $doctrine,Request $request): Response
     {
@@ -76,10 +91,13 @@ class AgentDrhController extends AbstractController
 
             $entityManager->persist($agentdrh);
             $entityManager->flush();
+            $this->addFlash('succes','Agent DRH ajouté avec succès');
+            return $this->redirectToRoute('app_agent_drh');
         }
 
         return $this->render('agent_drh/new.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
+
 }
