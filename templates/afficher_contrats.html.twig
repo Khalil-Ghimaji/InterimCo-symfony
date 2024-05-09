@@ -1,10 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contrats {% if etat %}{{ etat }}{% endif %}{% endblock %}
+{% block title %}
+    Contrats{% if etat == "accepte" %}Acceptés
+{% else %}{% if etat == "refuse" %}Refusés
+{% else %}{% if etat == "en_cours_de_traitement" %}En cours de traitement
+{% else %}{% if etat == "finalise" %}Finalisés{% endif %}
+{% endif %}
+{% endif %}
+{% endif %}
+{% endblock %}
 
 {% block body %}
     {% include 'entete.twig' %}
-    <h1 class="text-center">Liste des Contrats {% if etat %}{{ etat }}{% endif %}</h1>
+    {% for flashMessage in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    {% for flashMessage in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+    <h1 class="text-center">Liste des Contrats
+        {% if etat == "accepte" %}Acceptés
+        {% else %}{% if etat == "refuse" %}Refusés
+        {% else %}{% if etat == "en_cours_de_traitement" %}En cours de traitement
+        {% else %}{% if etat == "finalise" %}Finalisés{% endif %}
+        {% endif %}
+        {% endif %}
+        {% endif %}
+        </h1>
 
     {% if contrats is empty %}
         <div class="container">

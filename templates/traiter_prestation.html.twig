@@ -20,47 +20,54 @@
                     <p><strong>Compétence requise :</strong> {{ prestation.competence.competence }} ({{ prestation.competence.niveauCompetence }})</p>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="container">
-                    <h2 class="text-center">Manipulation de la Date</h2>
-                    <form class="mt-4 ml-4">
-                        <div class="form-group">
-                            <label for="dateDebut" class="font-weight-bold">Sélectionnez la date de début :</label>
-                            {% set maxDate = prestation.dateFin|date_modify('-' ~ (prestation.duree-1) ~ 'days') %}
-                            <input type="date" id="dateDebut" name="dateDebut" class="form-control" min="{{ prestation.dateDebut|date('Y-m-d') }}" max="{{ maxDate|date('Y-m-d') }}">
-                        </div>
-                        <div id="dateDebutText" class="mt-3 ml-2" style="display: none;">Date de début sélectionnée :</div>
-                        <div id="dateDebutValue" class="ml-2" style="display: none;"></div>
-                    </form>
+            {% if prestation.contrat.etatContrat =='en_cours_de_traitement' %}
+                <div class="col-lg-6">
+                    <div class="container">
+                        <h2 class="text-center">Manipulation de la Date</h2>
+                        <form class="mt-4 ml-4">
+                            <div class="form-group">
+                                <label for="dateDebut" class="font-weight-bold">Sélectionnez la date de début :</label>
+                                {% set maxDate = prestation.dateFin|date_modify('-' ~ (prestation.duree-1) ~ 'days') %}
+                                <input type="date" id="dateDebut" name="dateDebut" class="form-control" min="{{ prestation.dateDebut|date('Y-m-d') }}" max="{{ maxDate|date('Y-m-d') }}">
+                            </div>
+                            <div id="dateDebutText" class="mt-3 ml-2" style="display: none;">Date de début sélectionnée :</div>
+                            <div id="dateDebutValue" class="ml-2" style="display: none;"></div>
+                        </form>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
     </div>
     </div>
 
     {% include 'employe_affectes.html.twig' %}
-    {% include 'employes_adequats.html.twig' %}
+    {% if prestation.contrat.etatContrat =='en_cours_de_traitement' %}
+        {% include 'employes_adequats.html.twig' %}
 
-    <div class="container text-center mt-3">
-        <form action="{{ path('valider_prestation') }}" method="post">
-            <input type="hidden" name="nouvelleDateDebut" id="nouvelleDateDebut" value="">
-            <input type="hidden" name="idPrestation"  value={{ prestation.id }}>
-            <button type="submit" class="btn btn-lg btn-success" id="validerForm">Valider</button>
-        </form>
-    </div>
+        <div class="container text-center mt-3">
+            <form action="{{ path('valider_prestation') }}" method="post">
+                <input type="hidden" name="nouvelleDateDebut" id="nouvelleDateDebut" value="">
+                <input type="hidden" name="idPrestation"  value={{ prestation.id }}>
+                <button type="submit" class="btn btn-lg btn-success" id="validerForm">Valider</button>
+            </form>
+        </div>
+    {% endif %}
+
 
 {% endblock %}
 
 {% block javascripts %}
-    <script>
-        document.getElementById('dateDebut').addEventListener('change', function() {
-            var selectedDate = this.value;
-            document.getElementById('dateDebutText').style.display = 'block';
-            document.getElementById('dateDebutValue').innerHTML = selectedDate;
-            document.getElementById('dateDebutValue').style.display = 'block';
-            document.getElementById('nouvelleDateDebut').value = selectedDate;
-            console.log(document.getElementById('nouvelleDateDebut').value);
-        });
+    {% if prestation.contrat.etatContrat=='en_cours_de_traitement' %}
+        <script>
+            document.getElementById('dateDebut').addEventListener('change', function() {
+                var selectedDate = this.value;
+                document.getElementById('dateDebutText').style.display = 'block';
+                document.getElementById('dateDebutValue').innerHTML = selectedDate;
+                document.getElementById('dateDebutValue').style.display = 'block';
+                document.getElementById('nouvelleDateDebut').value = selectedDate;
+                console.log(document.getElementById('nouvelleDateDebut').value);
+            });
 
-    </script>
+        </script
+    {% endif %}
 {% endblock %}

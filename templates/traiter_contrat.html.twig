@@ -60,6 +60,7 @@
             </table>
         {% endif %}
     </div>
+{% if contrat.etatContrat=='en_cours_de_traitement' %}
 
     <div class="container mt-3">
         <div class="row">
@@ -74,20 +75,23 @@
                 </div>
                 <div class="row mt-3" id="conteneurFormulaires" style="display: none;">
                     <div class="col text-center">
-                        <a href="{{ path('succes_contrat', {'id': contrat.id}) }}" class="btn btn-success mr-2">Notifier Client de Succès</a>
-                        <a href="{{ path('echec_contrat', {'id': contrat.id}) }}" class="btn btn-danger">Notifier Client d'Échec</a>
+                        <a href="{{ path('valider_contrat', {'id': contrat.id,'etat':'accepte'}) }}" class="btn btn-success mr-2">Notifier Client de Succès</a>
+                        <a href="{{ path('valider_contrat', {'id': contrat.id,'etat':'refuse'}) }}" class="btn btn-danger">Notifier Client d'Échec</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}
-    <script>
-        document.getElementById("boutonConfirmer").onclick = function () {
-            var conteneurFormulaires = document.getElementById("conteneurFormulaires");
-            conteneurFormulaires.style.display = "block";
-        };
-    </script>
+    {% if contrat.etatContrat=='en_cours_de_traitement' %}
+        <script>
+            document.getElementById("boutonConfirmer").onclick = function () {
+                var conteneurFormulaires = document.getElementById("conteneurFormulaires");
+                conteneurFormulaires.style.display = "block";
+            };
+        </script>
+    {% endif %}
 {% endblock %}

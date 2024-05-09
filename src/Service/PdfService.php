@@ -23,7 +23,7 @@ class PdfService
         $this->domPdf->loadHtml($html);
         $this->domPdf->render();
         $this->domPdf->stream("contrat.pdf", [
-            'Attachment' => true // Correction de la typo ici
+            'Attachment' => true
         ]);
     }
 

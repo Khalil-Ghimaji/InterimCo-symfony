@@ -34,9 +34,6 @@ class Contrats
     #[ORM\Column(nullable: true)]
     private ?float $prix = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?float $prix_final = null;
-
     #[ORM\ManyToOne(inversedBy: 'contrats')]
     private ?Agentsdrh $agent_drh = null;
 
@@ -135,18 +132,6 @@ class Contrats
     public function setPrix(?float $prix): static
     {
         $this->prix = $prix;
-
-        return $this;
-    }
-
-    public function getPrixFinal(): ?float
-    {
-        return $this->prix_final;
-    }
-
-    public function setPrixFinal(?float $prix_final): static
-    {
-        $this->prix_final = $prix_final;
 
         return $this;
     }

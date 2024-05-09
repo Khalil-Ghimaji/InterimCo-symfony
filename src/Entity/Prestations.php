@@ -23,20 +23,13 @@ class Prestations
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date_fin = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $date_fin_finale = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date_deb_finale = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $duree = null;
 
     #[ORM\Column(nullable: true)]
     private ?float $prix = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?float $prix_final = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
@@ -92,29 +85,7 @@ class Prestations
         return $this;
     }
 
-    public function getDateFinFinale(): ?\DateTimeInterface
-    {
-        return $this->date_fin_finale;
-    }
 
-    public function setDateFinFinale(?\DateTimeInterface $date_fin_finale): static
-    {
-        $this->date_fin_finale = $date_fin_finale;
-
-        return $this;
-    }
-
-    public function getDateDebFinale(): ?\DateTimeInterface
-    {
-        return $this->date_deb_finale;
-    }
-
-    public function setDateDebFinale(\DateTimeInterface $date_deb_finale): static
-    {
-        $this->date_deb_finale = $date_deb_finale;
-
-        return $this;
-    }
 
     public function getDuree(): ?int
     {
@@ -136,18 +107,6 @@ class Prestations
     public function setPrix(?float $prix): static
     {
         $this->prix = $prix;
-
-        return $this;
-    }
-
-    public function getPrixFinal(): ?float
-    {
-        return $this->prix_final;
-    }
-
-    public function setPrixFinal(?float $prix_final): static
-    {
-        $this->prix_final = $prix_final;
 
         return $this;
     }

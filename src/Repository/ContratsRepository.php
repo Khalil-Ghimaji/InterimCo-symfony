@@ -40,21 +40,6 @@ class ContratsRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
-    public function findByEtat(string $etat): array
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.etat_contrat = :etat')
-            ->setParameter('etat', $etat)
-            ->getQuery()
-            ->getResult();
-    }
-    public function findById(int $id): ?Contrats
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.id = :id')
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
+
 
 }

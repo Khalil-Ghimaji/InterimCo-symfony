@@ -40,12 +40,5 @@ class CompetencesRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
-    public function findById($id): ?Competences
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.id = :id')
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
+
 }
