@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ClientController!{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h2 class="text-center">Gestion des Clients </h2>
+        <div class="mb-3">
+            {{ form_start(filter,{'attr':{'class':'form-horizontal'}}) }}
+            <div class="form-group row">
+                <div class="col">
+                    {{ form_row(filter.username) }}
+                </div>
+                <div class="col">
+                    {{ form_row(filter.numeroTelephone) }}
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    {{ form_row(filter.nom) }}
+                </div>
+                <div class="col">
+                    {{ form_row(filter.locale) }}
+                </div>
+
+            </div>
+            <div class="row">
+                {{ form_row(filter.email) }}
+            </div>
+
+            {{ form_rest(filter) }}
+        </div>
+    </div>
+    <div class="container mt-5">
+        <h4>Liste des Clients</h4>
+        <table class="table mt-3">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom d'utilisateur</th>
+                <th>Nom</th>
+                <th>Locale</th>
+                <th>Email</th>
+                <th>Numero de téléphone</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for client in clients %}
+                <tr>
+                    <td>{{ client.id }}</td>
+                    <td>{{ client.username }}</td>
+                    <td>{{ client.nom }}</td>
+                    <td>{{ client.locale }}</td>
+                    <td>{{ client.email}}</td>
+                    <td>{{ client.numeroTelephone }}</td>
+                </tr>
+            {% else %}
+                <td colspan="6"><h3>Pas de clients dans la bd</h3></td>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
