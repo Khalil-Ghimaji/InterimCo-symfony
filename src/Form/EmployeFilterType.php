@@ -22,14 +22,15 @@ class EmployeFilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
-            ->add('prenom')
-            ->add('email')
+            ->setMethod('GET')
+            ->add('nom',options:['required' => false])
+            ->add('prenom',options:['required' => false])
+            ->add('email',options:['required' => false])
             ->add('dateInscription', null, [
                 'widget' => 'single_text'
             ])
-            ->add('adresse')
-            ->add('numeroTelephone')
+            ->add('adresse',options:['required' => false])
+            ->add('numeroTelephone',options:['required' => false])
             ->add('competences', EntityType::class, [
                 'class' => Competences::class,
                 'choice_label' => function ($competence) {

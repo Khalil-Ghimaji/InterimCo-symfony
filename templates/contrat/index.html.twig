@@ -1,0 +1,75 @@
+{# templates/contract/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="text-center">Gestion des Contrats</h2>
+    <div class="container mt-5">
+        <div class="mb-3">
+            <div class="form-group row">
+                <div class="col">
+                    {{ form_row(filter.libelle) }}
+                </div>
+                <div class="col">
+                    {{ form_row(filter.dateSoumission) }}
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <div class="col">
+                {{ form_row(filter.dateReponse) }}
+                </div>
+                <div class="col">
+                    {{ form_row(filter.etatContrat) }}
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <div class="col">
+                {{ form_row(filter.prix) }}
+                </div>
+                <div class="col">
+                    {{ form_row(filter.client) }}
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <div class="col">
+                {{ form_row(filter.agentDrh) }}
+                </div>
+            </div>
+            {{ form_end(filter) }}
+        </div>
+    </div>
+    <hr>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Contract ID</th>
+            <th>Client</th>
+            <th>Agent DRH</th>
+            <th>Libelle</th>
+            <th>Date Soumission</th>
+            <th>Date Reponse</th>
+            <th>Etat Contrat</th>
+            <th>Prix</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for contract in contrats %}
+            <tr>
+                <td>{{ contract.id }}</td>
+                <td>{{ contract.client.name }}</td>
+                <td>{{ contract.agentDrh.name }}</td>
+                <td>{{ contract.libelle }}</td>
+                <td>{{ contract.dateSoumission|date('Y-m-d') }}</td>
+                <td>{{ contract.dateReponse|date('Y-m-d') }}</td>
+                <td>{{ contract.etatContrat }}</td>
+                <td>{{ contract.prix }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
