@@ -20,7 +20,7 @@ class CompetenceController extends AbstractController
     public function index(ManagerRegistry $doctrine,Request $request): Response
     {
         $repository = $doctrine->getRepository(Competences::class);
-        $qb = $repository->createQueryBuilder('c');
+        $qb = $repository->createQueryBuilder('co');
         $competenceFilter = new Competences();
         $competenceFilterForm = $this->createForm(CompetenceFilterType::class,$competenceFilter);
         $competenceFilterForm->handleRequest($request);
@@ -28,15 +28,15 @@ class CompetenceController extends AbstractController
             $formData = $competenceFilterForm->getData();
             // Use query builder to construct the query
             if ($formData->getCompetence()) {
-                $qb->andWhere('c.competence LIKE :competence')
+                $qb->andWhere('co.competence LIKE :competence')
                     ->setParameter('competence', $formData->getCompetence());
             }
             if ($formData->getNiveauCompetence()) {
-                $qb->andWhere('c.niveauCompetence = :niveauCompetence')
+                $qb->andWhere('co.niveauCompetence = :niveauCompetence')
                     ->setParameter('niveauCompetence', $formData->getNiveauCompetence());
             }
             if ($formData->getPrixEstime()) {
-                $qb->andWhere('c.prixEstime >= :prixEstime')
+                $qb->andWhere('co.prixEstime >= :prixEstime')
                     ->setParameter('prixEstime', $formData->getPrixEstime());
             }
 
