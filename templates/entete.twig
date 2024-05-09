@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #5298b9;"> <!-- Utilisation de l'attribut style pour la couleur personnalisée -->
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #5298b9;">
     <div class="container entete-container">
         <a class="navbar-brand" href="#"><h2 class="h2-container">InterimCo</h2></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -7,24 +7,31 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('home') }}">Acceuil</a>
+                    <a class="nav-link" href="{{ path('home') }}">Accueil</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0);" onclick="javascript:history.back();">Retour</a>
-                </li>
-
+                {% if contrat is defined %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('afficher_contrats', {'etat': contrat.etatContrat}) }}">Retour</a>
+                    </li>
+                {% elseif prestation is defined %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('traiter_contrat', {'id': prestation.contrat.id}) }}">Retour</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);" onclick="javascript:history.back();">Retour</a>
+                    </li>
+                {% endif %}
                 <li class="nav-item dropdown">
                     <button class="btn dropdown-toggle" type="button" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{ app.user.userIdentifier }}
                     </button>
-
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
-                        <a class="dropdown-item" href={{ path('profile') }}>Profil</a>
+                        <a class="dropdown-item" href="{{ path('profile') }}">Profil</a>
                         <a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
                     </div>
                 </li>
             </ul>
         </div>
     </div>
-
 </nav>
