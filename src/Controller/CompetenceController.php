@@ -57,6 +57,8 @@ class CompetenceController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($competence);
             $entityManager->flush();
+            $this->addFlash('success','Competence ajoutée avec succès');
+            return $this->redirectToRoute('app_competence');
         }
 
         return $this->render('competence/new.html.twig', [

@@ -91,7 +91,7 @@ class AgentDrhController extends AbstractController
 
             $entityManager->persist($agentdrh);
             $entityManager->flush();
-            $this->addFlash('succes','Agent DRH ajouté avec succès');
+            $this->addFlash('success','Agent DRH ajouté avec succès');
             return $this->redirectToRoute('app_agent_drh');
         }
 

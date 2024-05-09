@@ -76,11 +76,10 @@ class EmployeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
             $entityManager->persist($employe);
             $entityManager->flush();
+            $this->addFlash('success','Employé ajouté avec succès');
         }
-
         return $this->render('employe/new.html.twig', [
             'form' => $form->createView(),
         ]);
