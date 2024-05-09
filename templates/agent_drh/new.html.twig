@@ -4,6 +4,21 @@
 
 {% block body %}
     <div class="container mt-5">
+    {% for message in app.session.flashBag.get('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.session.flashBag.get('info') %}
+        <div class="alert alert-info">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.session.flashBag.get('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
     <h1>Nouveau Agent DRH</h1>
 
         {{ form_errors(registrationForm) }}
@@ -15,7 +30,7 @@
         {{ form_row(registrationForm.numeroTelephone) }}
         {{ form_row(registrationForm.username) }}
         {{ form_row(registrationForm.password, {
-            label: 'Password'
+            label: 'Mot de passe'
         }) }}
         <input type="submit" class="btn btn-primary" value="Créer compte">
         {{ form_end(registrationForm) }}

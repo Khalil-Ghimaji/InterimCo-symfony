@@ -27,7 +27,8 @@ class EmployeFilterType extends AbstractType
             ->add('prenom',options:['required' => false])
             ->add('email',options:['required' => false])
             ->add('dateInscription', null, [
-                'widget' => 'single_text'
+                'widget' => 'single_text',
+                'required' => false,
             ])
             ->add('adresse',options:['required' => false])
             ->add('numeroTelephone',options:['required' => false])

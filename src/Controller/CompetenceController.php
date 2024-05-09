@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Competences;
 use App\Form\CompetenceFilterType;
+use App\Form\CompetenceFormType;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +26,7 @@ class CompetenceController extends AbstractController
     public function index(ManagerRegistry $doctrine,Request $request): Response
     {
         $repository = $doctrine->getRepository(Competences::class);
-        $qb = $repository->createQueryBuilder('c');
+        $qb = $repository->createQueryBuilder('co');
         $competenceFilter = new Competences();
         $competenceFilterForm = $this->createForm(CompetenceFilterType::class,$competenceFilter);
         $competenceFilterForm->handleRequest($request);
@@ -32,15 +34,15 @@ class CompetenceController extends AbstractController
             $formData = $competenceFilterForm->getData();
             // Use query builder to construct the query
             if ($formData->getCompetence()) {
-                $qb->andWhere('c.competence LIKE :competence')
+                $qb->andWhere('co.competence LIKE :competence')
                     ->setParameter('competence', $formData->getCompetence());
             }
             if ($formData->getNiveauCompetence()) {
-                $qb->andWhere('c.niveauCompetence = :niveauCompetence')
+                $qb->andWhere('co.niveauCompetence = :niveauCompetence')
                     ->setParameter('niveauCompetence', $formData->getNiveauCompetence());
             }
             if ($formData->getPrixEstime()) {
-                $qb->andWhere('c.prixEstime >= :prixEstime')
+                $qb->andWhere('co.prixEstime >= :prixEstime')
                     ->setParameter('prixEstime', $formData->getPrixEstime());
             }
 
@@ -68,5 +70,23 @@ class CompetenceController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('app_competence');
+    }
+    #[Route('/new', name: 'app_competence_new')]
+    public function add(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $competence = new Competences();
+        $form = $this->createForm( CompetenceFormType::class, $competence);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($competence);
+            $entityManager->flush();
+            $this->addFlash('success','Competence ajoutée avec succès');
+            return $this->redirectToRoute('app_competence');
+        }
+
+        return $this->render('competence/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }

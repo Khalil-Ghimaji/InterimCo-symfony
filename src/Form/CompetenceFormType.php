@@ -2,30 +2,28 @@
 
 namespace App\Form;
 
-use App\Entity\AgentsDrh;
+use App\Entity\Competences;
+use App\Entity\Employes;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AgentDrhFormType extends AbstractType
+class CompetenceFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('username')
-            ->add('password',PASSWORDTYPE::class)
-            ->add('email')
-            ->add('numeroTelephone')
-            ->add('nom')
-            ->add('prenom')
+            ->add('competence')
+            ->add('niveauCompetence')
+            ->add('prixEstime')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => AgentsDrh::class,
+            'data_class' => Competences::class,
         ]);
     }
 }
