@@ -25,12 +25,12 @@ class EmployeFormType extends AbstractType
             ->add('adresse')
             ->add('numeroTelephone')
             ->add('competences', CollectionType::class, [
-                'entry_type' => CompetenceFilterType::class,
+                'entry_type' => CompetenceFormType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
                 'prototype' => true,
-                'prototype_name' => '__prestation_name__',
+                'prototype_name' => '__competence_name__',
             ]);
 //            ->add('competences', EntityType::class, [
 //                'class' => Competences::class,

@@ -77,7 +77,6 @@ class EmployeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
-
             $entityManager->persist($employe);
             $entityManager->flush();
         }

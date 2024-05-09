@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle Competence{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Nouvelle Competence</h1>
+
+        {{ form_errors(form) }}
+
+        {{ form_start(form) }}
+        {{ form_row(form.competence) }}
+        {{ form_row(form.niveauCompetence) }}
+        {{ form_row(form.prixEstime) }}
+        <input type="submit" class="btn btn-primary" value="Créer compte">
+        {{ form_end(form) }}
+    </div >
+{% endblock %}
