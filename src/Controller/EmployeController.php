@@ -79,6 +79,7 @@ class EmployeController extends AbstractController
             $entityManager->persist($employe);
             $entityManager->flush();
             $this->addFlash('success','Employé ajouté avec succès');
+            return $this->redirectToRoute('app_employe');
         }
         return $this->render('employe/new.html.twig', [
             'form' => $form->createView(),
